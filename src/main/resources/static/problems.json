@@ -1153,6 +1153,28 @@
     "leetcodeSlug": "top-k-frequent-elements"
   },
   {
+    "title": "0/1 Knapsack",
+    "number": "LC416",
+    "difficulty": "Medium",
+    "type": "Dynamic Programming",
+    "tags": [
+      "dp",
+      "knapsack",
+      "faang"
+    ],
+    "statement": "* Given n items with weights weights[] and values values[], and a knapsack of capacity W, find the maximum value you can obtain by selecting items such that the total weight does not exceed the capacity. Each item can be used at most once (0/1 choice). *",
+    "constraints": "* 1 \u2264 n \u2264 100 1 \u2264 weights[i], values[i] \u2264 1000 1 \u2264 W \u2264 10\u2074 *",
+    "examples": "Example 1:\nInput:  weights = [1, 2, 3], values = [6, 10, 12], capacity = 5\nOutput: 22\nExplanation: Take items 1 and 2 (weight 2+3=5, value 10+12=22).\nExample 2:\nInput:  weights = [10, 20, 30], values = [60, 100, 120], capacity = 50\nOutput: 220\nExplanation: Take items 1 and 2 (weight 20+30=50, value 100+120=220).",
+    "approach": "dp[i][w] = max value using first i items with capacity w. Either skip item i or take it.",
+    "time": "O(n * W)",
+    "space": "O(W) with 1D optimization",
+    "className": "LC416_ZeroOneKnapsack_Medium_DP",
+    "packagePath": "com.leetcode.medium.dynamicprogramming",
+    "filePath": "medium/dynamicprogramming/LC416_ZeroOneKnapsack_Medium_DP.java",
+    "javaCode": "package com.leetcode.medium.dynamicprogramming;\n\npublic class LC416_ZeroOneKnapsack_Medium_DP {\n\n    public static int knapsack(int[] weights, int[] values, int capacity) {\n        int[] dp = new int[capacity + 1];\n        for (int i = 0; i < weights.length; i++) {\n            for (int w = capacity; w >= weights[i]; w--) {\n                dp[w] = Math.max(dp[w], values[i] + dp[w - weights[i]]);\n            }\n        }\n        return dp[capacity];\n    }\n\n    public static int knapsack2D(int[] weights, int[] values, int capacity) {\n        int n = weights.length;\n        int[][] dp = new int[n + 1][capacity + 1];\n        for (int i = 1; i <= n; i++) {\n            for (int w = 0; w <= capacity; w++) {\n                dp[i][w] = dp[i - 1][w]; // skip item i-1\n                if (w >= weights[i - 1]) {\n                    dp[i][w] = Math.max(dp[i][w], values[i - 1] + dp[i - 1][w - weights[i - 1]]);\n                }\n            }\n        }\n        return dp[n][capacity];\n    }\n\n    public static void main(String[] args) {\n        System.out.println(knapsack(new int[]{1, 2, 3}, new int[]{6, 10, 12}, 5));       // 22\n        System.out.println(knapsack(new int[]{10, 20, 30}, new int[]{60, 100, 120}, 50)); // 220\n    }\n}",
+    "leetcodeSlug": "01-knapsack"
+  },
+  {
     "title": "Binary Search",
     "number": "LC704",
     "difficulty": "Easy",
