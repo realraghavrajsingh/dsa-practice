@@ -1,0 +1,5 @@
+{
+  "buildCommand": "python3 scripts/extract_problems.py && mkdir -p public && cp src/main/resources/static/index.html src/main/resources/static/problems.json public/",
+  "outputDirectory": "public",
+  "framework": null
+}

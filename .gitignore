@@ -41,3 +41,6 @@ venv/
 
 ### Mac OS ###
 .DS_Store
+
+### Vercel build output ###
+public/

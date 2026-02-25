@@ -20,6 +20,13 @@ Run the web app and open **http://localhost:8080** in your browser:
 
 Requires [ngrok](https://ngrok.com) (`brew install ngrok`). Alternative: `npx localtunnel --port 8080`.
 
+**Deploy to Vercel** (free, always online):
+
+1. Push to GitHub
+2. Go to [vercel.com](https://vercel.com) → Import `dsa-practice` repo
+3. Deploy (no config needed – `vercel.json` is included)
+4. Get a live URL like `dsa-practice.vercel.app`
+
 **After adding new problems**, regenerate the data:
 
 ```bash
