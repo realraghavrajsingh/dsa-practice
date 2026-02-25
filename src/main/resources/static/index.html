@@ -30,10 +30,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
   <style>
     .prose-pre { white-space: pre-wrap; word-break: break-word; }
     .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
     .dark .gradient-bg { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); }
+    .code-block-wrapper { position: relative; }
+    .code-block-wrapper pre { margin: 0; border-radius: 0 0 0.5rem 0.5rem; max-height: 400px; overflow: auto; }
+    .code-block-header { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1rem; background: #2d3748; color: #a0aec0; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; border-radius: 0.5rem 0.5rem 0 0; }
+    .dark .code-block-header { background: #1a202c; }
+    .copy-btn { padding: 0.25rem 0.5rem; border-radius: 0.25rem; background: #4a5568; color: white; font-size: 0.7rem; cursor: pointer; transition: all 0.2s; border: none; }
+    .copy-btn:hover { background: #6366f1; }
+    .copy-btn.copied { background: #10b981; }
+    .card { transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.25); }
+    .dark .card:hover { box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.4); }
   </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen font-sans antialiased transition-colors duration-200">
@@ -186,14 +197,17 @@
       empty.classList.add('hidden');
 
       grid.innerHTML = filtered.map(p => `
-        <div class="card p-5 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-lg transition-all cursor-pointer group" onclick='openModal("${p.number}")'>
+        <div class="card p-5 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all cursor-pointer group shadow-sm" onclick='openModal("${p.number}")'>
           <div class="flex items-start justify-between gap-2 mb-2">
             <span class="text-xs font-mono font-medium text-indigo-600 dark:text-indigo-400">${p.number}</span>
             <span class="badge px-2 py-0.5 rounded-full text-xs font-medium ${getDifficultyClass(p.difficulty)}">${p.difficulty}</span>
           </div>
           <h3 class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors mb-2">${escapeHtml(p.title)}</h3>
           <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">${escapeHtml(p.type || '')}</p>
-          ${p.time ? `<p class="text-xs text-gray-400 dark:text-gray-500 mt-2 font-mono">${escapeHtml(p.time)} | ${escapeHtml(p.space)}</p>` : ''}
+          <div class="flex items-center gap-2 mt-2 flex-wrap">
+            ${p.time ? `<span class="text-xs font-mono text-gray-400 dark:text-gray-500">${escapeHtml(p.time)}</span>` : ''}
+            ${p.javaCode ? `<span class="text-xs px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">Java</span>` : ''}
+          </div>
         </div>
       `).join('');
     }
@@ -220,17 +234,30 @@
       const content = document.getElementById('modal-content');
 
       title.textContent = `${p.number}: ${p.title}`;
+      const codeId = 'modal-code-' + Date.now();
       content.innerHTML = `
         <div class="space-y-6">
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap gap-2 items-center">
             <span class="badge px-3 py-1 rounded-full text-sm font-medium ${getDifficultyClass(p.difficulty)}">${p.difficulty}</span>
             <span class="text-sm text-gray-500 dark:text-gray-400">${escapeHtml(p.type || '')}</span>
+            ${p.time || p.space ? `<span class="text-xs font-mono text-gray-400">${escapeHtml(p.time || '')} | ${escapeHtml(p.space || '')}</span>` : ''}
           </div>
-          ${p.statement ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Problem Statement</h3><p class="text-gray-600 dark:text-gray-300">${escapeHtml(p.statement)}</p></div>` : ''}
+          ${p.statement ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Problem Statement</h3><p class="text-gray-600 dark:text-gray-300 leading-relaxed">${escapeHtml(p.statement)}</p></div>` : ''}
           ${p.constraints ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Constraints</h3><p class="text-gray-600 dark:text-gray-300">${escapeHtml(p.constraints)}</p></div>` : ''}
-          ${p.examples ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Examples</h3><pre class="prose-pre p-4 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm font-mono overflow-x-auto">${escapeHtml(p.examples)}</pre></div>` : ''}
+          ${p.examples ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Examples</h3><pre class="prose-pre p-4 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm font-mono overflow-x-auto border border-gray-200 dark:border-gray-700">${escapeHtml(p.examples)}</pre></div>` : ''}
           ${p.approach ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Approach</h3><p class="text-gray-600 dark:text-gray-300">${escapeHtml(p.approach)}</p></div>` : ''}
-          ${p.time || p.space ? `<div class="flex gap-4 text-sm font-mono"><span>Time: ${escapeHtml(p.time || '-')}</span><span>Space: ${escapeHtml(p.space || '-')}</span></div>` : ''}
+          ${p.javaCode ? `
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Java Solution</h3>
+            <div class="code-block-wrapper rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+              <div class="code-block-header">
+                <span>${escapeHtml(p.className || '')}.java</span>
+                <button class="copy-btn" onclick="copyCode('${codeId}', this)">Copy</button>
+              </div>
+              <pre class="language-java"><code id="${codeId}">${escapeHtml(p.javaCode)}</code></pre>
+            </div>
+          </div>
+          ` : ''}
           <div class="pt-4 border-t border-gray-200 dark:border-gray-800">
             <p class="text-xs text-gray-500 dark:text-gray-400 font-mono">${escapeHtml(p.packagePath)}.${escapeHtml(p.className || '')}</p>
           </div>
@@ -238,11 +265,22 @@
       `;
       modal.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
+      if (window.Prism && p.javaCode) Prism.highlightAllUnder(content);
     }
 
     function closeModal() {
       document.getElementById('modal').classList.add('hidden');
       document.body.style.overflow = '';
+    }
+
+    function copyCode(id, btn) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+      });
     }
 
     document.getElementById('search').addEventListener('input', render);
@@ -251,5 +289,7 @@
     document.getElementById('type-filter').addEventListener('change', render);
     document.addEventListener('keydown', e => e.key === 'Escape' && closeModal());
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 </body>
 </html>

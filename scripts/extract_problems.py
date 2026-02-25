@@ -96,6 +96,17 @@ def extract_javadoc(content: str) -> dict | None:
     return result if result["title"] else None
 
 
+def extract_java_code(content: str) -> str:
+    """Extract Java class code (from package to end), excluding Javadoc."""
+    # Remove Javadoc blocks
+    code = re.sub(r'/\*\*.*?\*/', '', content, flags=re.DOTALL)
+    # Remove single-line comments (but preserve // inside strings - simplified)
+    code = re.sub(r'^\s*//.*$', '', code, flags=re.MULTILINE)
+    # Normalize whitespace: collapse multiple blank lines to one
+    code = re.sub(r'\n\s*\n\s*\n+', '\n\n', code)
+    return code.strip()
+
+
 def main():
     problems = []
     seen = set()
@@ -112,6 +123,7 @@ def main():
             meta["className"] = class_name
             meta["packagePath"] = f"com.leetcode.{package_path}" if package_path else "com.leetcode"
             meta["filePath"] = str(rel_path)
+            meta["javaCode"] = extract_java_code(content)
             problems.append(meta)
             seen.add(meta["number"])
 

@@ -17,7 +17,8 @@
     "space": "O(n)",
     "className": "LC001_TwoSum_Easy_Array",
     "packagePath": "com.leetcode.easy.array",
-    "filePath": "easy/array/LC001_TwoSum_Easy_Array.java"
+    "filePath": "easy/array/LC001_TwoSum_Easy_Array.java",
+    "javaCode": "package com.leetcode.easy.array;\n\nimport java.util.HashMap;\nimport java.util.Map;\n\npublic class LC001_TwoSum_Easy_Array {\n\n    public static int[] twoSum(int[] nums, int target) {\n        Map<Integer, Integer> seen = new HashMap<>();\n        for (int i = 0; i < nums.length; i++) {\n            int complement = target - nums[i];\n            if (seen.containsKey(complement)) {\n                return new int[]{seen.get(complement), i};\n            }\n            seen.put(nums[i], i);\n        }\n        return new int[]{};\n    }\n\n    public static void main(String[] args) {\n        int[] nums = {2, 7, 11, 15};\n        int target = 9;\n        int[] result = twoSum(nums, target);\n        System.out.println(\"Indices: [\" + result[0] + \", \" + result[1] + \"]\"); // [0, 1]\n    }\n}"
   },
   {
     "title": "Longest Substring Without Repeating Characters",
@@ -37,7 +38,29 @@
     "space": "O(min(n, charset))",
     "className": "LC003_LongestSubstring_Medium_SlidingWindow",
     "packagePath": "com.leetcode.medium.slidingwindow",
-    "filePath": "medium/slidingwindow/LC003_LongestSubstring_Medium_SlidingWindow.java"
+    "filePath": "medium/slidingwindow/LC003_LongestSubstring_Medium_SlidingWindow.java",
+    "javaCode": "package com.leetcode.medium.slidingwindow;\n\nimport java.util.HashMap;\nimport java.util.Map;\n\npublic class LC003_LongestSubstring_Medium_SlidingWindow {\n\n    public static int lengthOfLongestSubstring(String s) {\n        Map<Character, Integer> map = new HashMap<>();\n        int max = 0, start = 0;\n        for (int i = 0; i < s.length(); i++) {\n            char c = s.charAt(i);\n            if (map.containsKey(c) && map.get(c) >= start)\n                start = map.get(c) + 1;\n            map.put(c, i);\n            max = Math.max(max, i - start + 1);\n        }\n        return max;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(lengthOfLongestSubstring(\"abcabcbb\")); // 3\n        System.out.println(lengthOfLongestSubstring(\"bbbbb\"));  // 1\n        System.out.println(lengthOfLongestSubstring(\"pwwkew\"));  // 3\n    }\n}"
+  },
+  {
+    "title": "Median of Two Sorted Arrays",
+    "number": "LC004",
+    "difficulty": "Hard",
+    "type": "Binary Search",
+    "tags": [
+      "binarysearch",
+      "array",
+      "faang"
+    ],
+    "statement": "* Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. The overall run time complexity should be O(log(m+n)). *",
+    "constraints": "* nums1.length == m, nums2.length == n 0 \u2264 m \u2264 1000, 0 \u2264 n \u2264 1000 1 \u2264 m + n \u2264 2000 -10\u2076 \u2264 nums1[i], nums2[i] \u2264 10\u2076 *",
+    "examples": "Example 1:\nInput:  nums1 = [1, 3], nums2 = [2]\nOutput: 2.0\nExplanation: merged = [1,2,3], median = 2.0\nExample 2:\nInput:  nums1 = [1, 2], nums2 = [3, 4]\nOutput: 2.5\nExplanation: merged = [1,2,3,4], median = (2+3)/2 = 2.5",
+    "approach": "Binary search on the shorter array to find the correct partition so that\n * all elements on the left half \u2264 all elements on the right half.",
+    "time": "O(log(min(m,n)))",
+    "space": "O(1)",
+    "className": "LC004_MedianOfTwoSortedArrays_Hard_BinarySearch",
+    "packagePath": "com.leetcode.hard.binarysearch",
+    "filePath": "hard/binarysearch/LC004_MedianOfTwoSortedArrays_Hard_BinarySearch.java",
+    "javaCode": "package com.leetcode.hard.binarysearch;\n\npublic class LC004_MedianOfTwoSortedArrays_Hard_BinarySearch {\n\n    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {\n        if (nums1.length > nums2.length) {\n            return findMedianSortedArrays(nums2, nums1);\n        }\n\n        int m = nums1.length, n = nums2.length;\n        int lo = 0, hi = m;\n\n        while (lo <= hi) {\n            int i = (lo + hi) / 2;\n            int j = (m + n + 1) / 2 - i;\n\n            int maxLeft1  = (i == 0) ? Integer.MIN_VALUE : nums1[i - 1];\n            int minRight1 = (i == m) ? Integer.MAX_VALUE : nums1[i];\n            int maxLeft2  = (j == 0) ? Integer.MIN_VALUE : nums2[j - 1];\n            int minRight2 = (j == n) ? Integer.MAX_VALUE : nums2[j];\n\n            if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1) {\n                if ((m + n) % 2 == 0) {\n                    return (Math.max(maxLeft1, maxLeft2) + Math.min(minRight1, minRight2)) / 2.0;\n                }\n                return Math.max(maxLeft1, maxLeft2);\n            } else if (maxLeft1 > minRight2) {\n                hi = i - 1;\n            } else {\n                lo = i + 1;\n            }\n        }\n        throw new IllegalArgumentException(\"Input arrays are not sorted.\");\n    }\n\n    public static void main(String[] args) {\n        System.out.println(findMedianSortedArrays(new int[]{1, 3}, new int[]{2}));    // 2.0\n        System.out.println(findMedianSortedArrays(new int[]{1, 2}, new int[]{3, 4})); // 2.5\n    }\n}"
   },
   {
     "title": "Regular Expression Matching",
@@ -57,7 +80,8 @@
     "space": "O(m*n)",
     "className": "LC010_RegularExpressionMatching_Hard_DP",
     "packagePath": "com.leetcode.hard.dynamicprogramming",
-    "filePath": "hard/dynamicprogramming/LC010_RegularExpressionMatching_Hard_DP.java"
+    "filePath": "hard/dynamicprogramming/LC010_RegularExpressionMatching_Hard_DP.java",
+    "javaCode": "package com.leetcode.hard.dynamicprogramming;\n\npublic class LC010_RegularExpressionMatching_Hard_DP {\n\n    public static boolean isMatch(String s, String p) {\n        int m = s.length(), n = p.length();\n        boolean[][] dp = new boolean[m + 1][n + 1];\n        dp[0][0] = true;\n        for (int j = 2; j <= n; j += 2)\n            if (p.charAt(j - 1) == '*') dp[0][j] = dp[0][j - 2];\n        for (int i = 1; i <= m; i++) {\n            for (int j = 1; j <= n; j++) {\n                if (p.charAt(j - 1) == '*') {\n                    dp[i][j] = dp[i][j - 2] || (match(s, p, i, j - 1) && dp[i - 1][j]);\n                } else {\n                    dp[i][j] = match(s, p, i, j) && dp[i - 1][j - 1];\n                }\n            }\n        }\n        return dp[m][n];\n    }\n\n    private static boolean match(String s, String p, int i, int j) {\n        if (i == 0) return false;\n        return p.charAt(j - 1) == '.' || s.charAt(i - 1) == p.charAt(j - 1);\n    }\n\n    public static void main(String[] args) {\n        System.out.println(isMatch(\"aa\", \"a\"));   // false\n        System.out.println(isMatch(\"aa\", \"a*\"));  // true\n        System.out.println(isMatch(\"ab\", \".*\")); // true\n    }\n}"
   },
   {
     "title": "Container With Most Water",
@@ -77,7 +101,8 @@
     "space": "O(1)",
     "className": "LC011_ContainerWithMostWater_Medium_TwoPointers",
     "packagePath": "com.leetcode.medium.twopointers",
-    "filePath": "medium/twopointers/LC011_ContainerWithMostWater_Medium_TwoPointers.java"
+    "filePath": "medium/twopointers/LC011_ContainerWithMostWater_Medium_TwoPointers.java",
+    "javaCode": "package com.leetcode.medium.twopointers;\n\npublic class LC011_ContainerWithMostWater_Medium_TwoPointers {\n\n    public static int maxArea(int[] height) {\n        int left = 0, right = height.length - 1, max = 0;\n        while (left < right) {\n            int area = Math.min(height[left], height[right]) * (right - left);\n            max = Math.max(max, area);\n            if (height[left] < height[right]) left++;\n            else right--;\n        }\n        return max;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(maxArea(new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7})); // 49\n    }\n}"
   },
   {
     "title": "3Sum",
@@ -97,7 +122,8 @@
     "space": "O(1) excluding output",
     "className": "LC015_ThreeSum_Medium_Array",
     "packagePath": "com.leetcode.medium.array",
-    "filePath": "medium/array/LC015_ThreeSum_Medium_Array.java"
+    "filePath": "medium/array/LC015_ThreeSum_Medium_Array.java",
+    "javaCode": "package com.leetcode.medium.array;\n\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.List;\n\npublic class LC015_ThreeSum_Medium_Array {\n\n    public static List<List<Integer>> threeSum(int[] nums) {\n        List<List<Integer>> result = new ArrayList<>();\n        Arrays.sort(nums);\n        for (int i = 0; i < nums.length - 2; i++) {\n            if (i > 0 && nums[i] == nums[i - 1]) continue;\n            int left = i + 1, right = nums.length - 1;\n            while (left < right) {\n                int sum = nums[i] + nums[left] + nums[right];\n                if (sum == 0) {\n                    result.add(List.of(nums[i], nums[left], nums[right]));\n                    while (left < right && nums[left] == nums[left + 1]) left++;\n                    while (left < right && nums[right] == nums[right - 1]) right--;\n                    left++;\n                    right--;\n                } else if (sum < 0) left++;\n                else right--;\n            }\n        }\n        return result;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(threeSum(new int[]{-1, 0, 1, 2, -1, -4}));\n\n    }\n}"
   },
   {
     "title": "3Sum Closest",
@@ -117,7 +143,8 @@
     "space": "O(1)",
     "className": "LC016_ThreeSumClosest_Medium_TwoPointers",
     "packagePath": "com.leetcode.medium.twopointers",
-    "filePath": "medium/twopointers/LC016_ThreeSumClosest_Medium_TwoPointers.java"
+    "filePath": "medium/twopointers/LC016_ThreeSumClosest_Medium_TwoPointers.java",
+    "javaCode": "package com.leetcode.medium.twopointers;\n\nimport java.util.Arrays;\n\npublic class LC016_ThreeSumClosest_Medium_TwoPointers {\n\n    public static int threeSumClosest(int[] nums, int target) {\n        Arrays.sort(nums);\n        int closest = nums[0] + nums[1] + nums[2];\n        for (int i = 0; i < nums.length - 2; i++) {\n            int left = i + 1, right = nums.length - 1;\n            while (left < right) {\n                int sum = nums[i] + nums[left] + nums[right];\n                if (Math.abs(sum - target) < Math.abs(closest - target)) closest = sum;\n                if (sum < target) left++;\n                else if (sum > target) right--;\n                else return target;\n            }\n        }\n        return closest;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(threeSumClosest(new int[]{-1, 2, 1, -4}, 1)); // 2\n    }\n}"
   },
   {
     "title": "Valid Parentheses",
@@ -136,7 +163,8 @@
     "space": "O(n)",
     "className": "LC020_ValidParentheses_Easy_Stack",
     "packagePath": "com.leetcode.easy.stack",
-    "filePath": "easy/stack/LC020_ValidParentheses_Easy_Stack.java"
+    "filePath": "easy/stack/LC020_ValidParentheses_Easy_Stack.java",
+    "javaCode": "package com.leetcode.easy.stack;\n\nimport java.util.ArrayDeque;\nimport java.util.Deque;\nimport java.util.Map;\n\npublic class LC020_ValidParentheses_Easy_Stack {\n\n    private static final Map<Character, Character> PAIRS = Map.of(')', '(', ']', '[', '}', '{');\n\n    public static boolean isValid(String s) {\n        Deque<Character> stack = new ArrayDeque<>();\n        for (char c : s.toCharArray()) {\n            if (PAIRS.containsKey(c)) {\n                if (stack.isEmpty() || stack.pop() != PAIRS.get(c)) return false;\n            } else {\n                stack.push(c);\n            }\n        }\n        return stack.isEmpty();\n    }\n\n    public static void main(String[] args) {\n        System.out.println(isValid(\"()[]{}\")); // true\n        System.out.println(isValid(\"(]\"));      // false\n    }\n}"
   },
   {
     "title": "Merge Two Sorted Lists",
@@ -155,7 +183,29 @@
     "space": "O(1)",
     "className": "LC021_MergeTwoSortedLists_Easy_LinkedList",
     "packagePath": "com.leetcode.easy.linkedlist",
-    "filePath": "easy/linkedlist/LC021_MergeTwoSortedLists_Easy_LinkedList.java"
+    "filePath": "easy/linkedlist/LC021_MergeTwoSortedLists_Easy_LinkedList.java",
+    "javaCode": "package com.leetcode.easy.linkedlist;\n\npublic class LC021_MergeTwoSortedLists_Easy_LinkedList {\n\n    public static class ListNode {\n        int val;\n        ListNode next;\n        ListNode(int val) { this.val = val; }\n        ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n    }\n\n    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {\n        ListNode dummy = new ListNode(0);\n        ListNode tail = dummy;\n        while (l1 != null && l2 != null) {\n            if (l1.val <= l2.val) { tail.next = l1; l1 = l1.next; }\n            else { tail.next = l2; l2 = l2.next; }\n            tail = tail.next;\n        }\n        tail.next = (l1 != null) ? l1 : l2;\n        return dummy.next;\n    }\n\n    public static void main(String[] args) {\n        ListNode l1 = new ListNode(1, new ListNode(2, new ListNode(4)));\n        ListNode l2 = new ListNode(1, new ListNode(3, new ListNode(4)));\n        ListNode merged = mergeTwoLists(l1, l2);\n        while (merged != null) {\n            System.out.print(merged.val + \" \");\n            merged = merged.next;\n        }\n        System.out.println(); // 1 1 2 3 4 4\n    }\n}"
+  },
+  {
+    "title": "Merge K Sorted Lists",
+    "number": "LC023",
+    "difficulty": "Hard",
+    "type": "Linked List, Heap",
+    "tags": [
+      "linkedlist",
+      "heap",
+      "faang"
+    ],
+    "statement": "* You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it. *",
+    "constraints": "* k == lists.length 0 \u2264 k \u2264 10\u2074 0 \u2264 lists[i].length \u2264 500 -10\u2074 \u2264 lists[i][j] \u2264 10\u2074 lists[i] is sorted in ascending order. The sum of lists[i].length will not exceed 10\u2074. *",
+    "examples": "Example 1:\nInput:  lists = [[1,4,5],[1,3,4],[2,6]]\nOutput: [1,1,2,3,4,4,5,6]\nExample 2:\nInput:  lists = []\nOutput: []\nExample 3:\nInput:  lists = [[]]\nOutput: []",
+    "approach": "Min-heap holding one node from each list. Poll the smallest, advance its pointer,\n * push its next back into the heap.",
+    "time": "O(N log k) where N = total nodes",
+    "space": "O(k)",
+    "className": "LC023_MergeKSortedLists_Hard_LinkedList",
+    "packagePath": "com.leetcode.hard.linkedlist",
+    "filePath": "hard/linkedlist/LC023_MergeKSortedLists_Hard_LinkedList.java",
+    "javaCode": "package com.leetcode.hard.linkedlist;\n\nimport java.util.PriorityQueue;\n\npublic class LC023_MergeKSortedLists_Hard_LinkedList {\n\n    public static class ListNode {\n        int val;\n        ListNode next;\n        ListNode(int val) { this.val = val; }\n        ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n    }\n\n    public static ListNode mergeKLists(ListNode[] lists) {\n        if (lists == null || lists.length == 0) return null;\n\n        PriorityQueue<ListNode> heap = new PriorityQueue<>((a, b) -> a.val - b.val);\n        for (ListNode head : lists) {\n            if (head != null) heap.offer(head);\n        }\n\n        ListNode dummy = new ListNode(0);\n        ListNode tail = dummy;\n        while (!heap.isEmpty()) {\n            ListNode node = heap.poll();\n            tail.next = node;\n            tail = tail.next;\n            if (node.next != null) heap.offer(node.next);\n        }\n        return dummy.next;\n    }\n\n    public static void main(String[] args) {\n        ListNode l1 = new ListNode(1, new ListNode(4, new ListNode(5)));\n        ListNode l2 = new ListNode(1, new ListNode(3, new ListNode(4)));\n        ListNode l3 = new ListNode(2, new ListNode(6));\n\n        ListNode result = mergeKLists(new ListNode[]{l1, l2, l3});\n        StringBuilder sb = new StringBuilder(\"[\");\n        while (result != null) {\n            sb.append(result.val);\n            if (result.next != null) sb.append(\",\");\n            result = result.next;\n        }\n        sb.append(\"]\");\n        System.out.println(sb); // [1,1,2,3,4,4,5,6]\n    }\n}"
   },
   {
     "title": "Search in Rotated Sorted Array",
@@ -174,7 +224,8 @@
     "space": "O(1)",
     "className": "LC033_SearchRotatedArray_Medium_BinarySearch",
     "packagePath": "com.leetcode.medium.binarysearch",
-    "filePath": "medium/binarysearch/LC033_SearchRotatedArray_Medium_BinarySearch.java"
+    "filePath": "medium/binarysearch/LC033_SearchRotatedArray_Medium_BinarySearch.java",
+    "javaCode": "package com.leetcode.medium.binarysearch;\n\npublic class LC033_SearchRotatedArray_Medium_BinarySearch {\n\n    public static int search(int[] nums, int target) {\n        int left = 0, right = nums.length - 1;\n        while (left <= right) {\n            int mid = left + (right - left) / 2;\n            if (nums[mid] == target) return mid;\n            if (nums[left] <= nums[mid]) {\n                if (target >= nums[left] && target < nums[mid]) right = mid - 1;\n                else left = mid + 1;\n            } else {\n                if (target > nums[mid] && target <= nums[right]) left = mid + 1;\n                else right = mid - 1;\n            }\n        }\n        return -1;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(search(new int[]{4, 5, 6, 7, 0, 1, 2}, 0)); // 4\n        System.out.println(search(new int[]{4, 5, 6, 7, 0, 1, 2}, 3)); // -1\n    }\n}"
   },
   {
     "title": "Find First and Last Position of Element in Sorted Array",
@@ -193,7 +244,8 @@
     "space": "O(1)",
     "className": "LC034_FindFirstLastPosition_Medium_BinarySearch",
     "packagePath": "com.leetcode.medium.binarysearch",
-    "filePath": "medium/binarysearch/LC034_FindFirstLastPosition_Medium_BinarySearch.java"
+    "filePath": "medium/binarysearch/LC034_FindFirstLastPosition_Medium_BinarySearch.java",
+    "javaCode": "package com.leetcode.medium.binarysearch;\n\npublic class LC034_FindFirstLastPosition_Medium_BinarySearch {\n\n    public static int[] searchRange(int[] nums, int target) {\n        int[] result = {-1, -1};\n        if (nums.length == 0) return result;\n        int left = 0, right = nums.length - 1;\n        while (left < right) {\n            int mid = left + (right - left) / 2;\n            if (nums[mid] < target) left = mid + 1;\n            else right = mid;\n        }\n        if (nums[left] != target) return result;\n        result[0] = left;\n        right = nums.length - 1;\n        while (left < right) {\n            int mid = left + (right - left) / 2 + 1;\n            if (nums[mid] > target) right = mid - 1;\n            else left = mid;\n        }\n        result[1] = right;\n        return result;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(java.util.Arrays.toString(searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)));\n\n        System.out.println(java.util.Arrays.toString(searchRange(new int[]{5, 7, 7, 8, 8, 10}, 6)));\n\n    }\n}"
   },
   {
     "title": "Search Insert Position",
@@ -212,7 +264,8 @@
     "space": "O(1)",
     "className": "LC035_SearchInsertPosition_Easy_BinarySearch",
     "packagePath": "com.leetcode.easy.binarysearch",
-    "filePath": "easy/binarysearch/LC035_SearchInsertPosition_Easy_BinarySearch.java"
+    "filePath": "easy/binarysearch/LC035_SearchInsertPosition_Easy_BinarySearch.java",
+    "javaCode": "package com.leetcode.easy.binarysearch;\n\npublic class LC035_SearchInsertPosition_Easy_BinarySearch {\n\n    public static int searchInsert(int[] nums, int target) {\n        int left = 0, right = nums.length - 1;\n        while (left <= right) {\n            int mid = left + (right - left) / 2;\n            if (nums[mid] == target) return mid;\n            if (nums[mid] < target) left = mid + 1;\n            else right = mid - 1;\n        }\n        return left;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(searchInsert(new int[]{1, 3, 5, 6}, 5)); // 2\n        System.out.println(searchInsert(new int[]{1, 3, 5, 6}, 2)); // 1\n        System.out.println(searchInsert(new int[]{1, 3, 5, 6}, 7)); // 4\n    }\n}"
   },
   {
     "title": "Combination Sum",
@@ -231,7 +284,8 @@
     "space": "O(target)",
     "className": "LC039_CombinationSum_Medium_Backtracking",
     "packagePath": "com.leetcode.medium.backtracking",
-    "filePath": "medium/backtracking/LC039_CombinationSum_Medium_Backtracking.java"
+    "filePath": "medium/backtracking/LC039_CombinationSum_Medium_Backtracking.java",
+    "javaCode": "package com.leetcode.medium.backtracking;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class LC039_CombinationSum_Medium_Backtracking {\n\n    public static List<List<Integer>> combinationSum(int[] candidates, int target) {\n        List<List<Integer>> result = new ArrayList<>();\n        backtrack(candidates, target, 0, new ArrayList<>(), result);\n        return result;\n    }\n\n    private static void backtrack(int[] cand, int remain, int start, List<Integer> path, List<List<Integer>> result) {\n        if (remain == 0) { result.add(new ArrayList<>(path)); return; }\n        if (remain < 0) return;\n        for (int i = start; i < cand.length; i++) {\n            path.add(cand[i]);\n            backtrack(cand, remain - cand[i], i, path, result);\n            path.remove(path.size() - 1);\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(combinationSum(new int[]{2, 3, 6, 7}, 7));\n\n    }\n}"
   },
   {
     "title": "First Missing Positive",
@@ -250,7 +304,8 @@
     "space": "O(1)",
     "className": "LC041_FirstMissingPositive_Hard_Array",
     "packagePath": "com.leetcode.hard.array",
-    "filePath": "hard/array/LC041_FirstMissingPositive_Hard_Array.java"
+    "filePath": "hard/array/LC041_FirstMissingPositive_Hard_Array.java",
+    "javaCode": "package com.leetcode.hard.array;\n\npublic class LC041_FirstMissingPositive_Hard_Array {\n\n    public static int firstMissingPositive(int[] nums) {\n        int n = nums.length;\n        for (int i = 0; i < n; i++) {\n            while (nums[i] >= 1 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {\n                int t = nums[nums[i] - 1];\n                nums[nums[i] - 1] = nums[i];\n                nums[i] = t;\n            }\n        }\n        for (int i = 0; i < n; i++)\n            if (nums[i] != i + 1) return i + 1;\n        return n + 1;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(firstMissingPositive(new int[]{1, 2, 0}));         // 3\n        System.out.println(firstMissingPositive(new int[]{3, 4, -1, 1}));   // 2\n        System.out.println(firstMissingPositive(new int[]{7, 8, 9, 11, 12})); // 1\n    }\n}"
   },
   {
     "title": "Trapping Rain Water",
@@ -270,7 +325,8 @@
     "space": "O(1)",
     "className": "LC042_TrappingRainWater_Hard_Array",
     "packagePath": "com.leetcode.hard.array",
-    "filePath": "hard/array/LC042_TrappingRainWater_Hard_Array.java"
+    "filePath": "hard/array/LC042_TrappingRainWater_Hard_Array.java",
+    "javaCode": "package com.leetcode.hard.array;\n\npublic class LC042_TrappingRainWater_Hard_Array {\n\n    public static int trap(int[] height) {\n        if (height == null || height.length < 3) return 0;\n        int left = 0, right = height.length - 1;\n        int maxLeft = 0, maxRight = 0, water = 0;\n        while (left < right) {\n            if (height[left] <= height[right]) {\n                if (height[left] >= maxLeft) maxLeft = height[left];\n                else water += maxLeft - height[left];\n                left++;\n            } else {\n                if (height[right] >= maxRight) maxRight = height[right];\n                else water += maxRight - height[right];\n                right--;\n            }\n        }\n        return water;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(trap(new int[]{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1})); // 6\n    }\n}"
   },
   {
     "title": "Permutations",
@@ -289,7 +345,8 @@
     "space": "O(n)",
     "className": "LC046_Permutations_Medium_Backtracking",
     "packagePath": "com.leetcode.medium.backtracking",
-    "filePath": "medium/backtracking/LC046_Permutations_Medium_Backtracking.java"
+    "filePath": "medium/backtracking/LC046_Permutations_Medium_Backtracking.java",
+    "javaCode": "package com.leetcode.medium.backtracking;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class LC046_Permutations_Medium_Backtracking {\n\n    public static List<List<Integer>> permute(int[] nums) {\n        List<List<Integer>> result = new ArrayList<>();\n        backtrack(nums, 0, result);\n        return result;\n    }\n\n    private static void backtrack(int[] nums, int start, List<List<Integer>> result) {\n        if (start == nums.length) {\n            List<Integer> list = new ArrayList<>();\n            for (int n : nums) list.add(n);\n            result.add(list);\n            return;\n        }\n        for (int i = start; i < nums.length; i++) {\n            swap(nums, start, i);\n            backtrack(nums, start + 1, result);\n            swap(nums, start, i);\n        }\n    }\n\n    private static void swap(int[] nums, int i, int j) {\n        int t = nums[i]; nums[i] = nums[j]; nums[j] = t;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(permute(new int[]{1, 2, 3}));\n\n    }\n}"
   },
   {
     "title": "Maximum Subarray (Kadane's Algorithm)",
@@ -309,7 +366,8 @@
     "space": "O(1)",
     "className": "LC053_MaxSubarray_Easy_Array",
     "packagePath": "com.leetcode.easy.array",
-    "filePath": "easy/array/LC053_MaxSubarray_Easy_Array.java"
+    "filePath": "easy/array/LC053_MaxSubarray_Easy_Array.java",
+    "javaCode": "package com.leetcode.easy.array;\n\npublic class LC053_MaxSubarray_Easy_Array {\n\n    public static int maxSubArray(int[] nums) {\n        int maxSum = nums[0], current = nums[0];\n        for (int i = 1; i < nums.length; i++) {\n            current = Math.max(nums[i], current + nums[i]);\n            maxSum = Math.max(maxSum, current);\n        }\n        return maxSum;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4})); // 6\n    }\n}"
   },
   {
     "title": "Climbing Stairs",
@@ -328,7 +386,8 @@
     "space": "O(1)",
     "className": "LC070_ClimbingStairs_Easy_DP",
     "packagePath": "com.leetcode.easy.dynamicprogramming",
-    "filePath": "easy/dynamicprogramming/LC070_ClimbingStairs_Easy_DP.java"
+    "filePath": "easy/dynamicprogramming/LC070_ClimbingStairs_Easy_DP.java",
+    "javaCode": "package com.leetcode.easy.dynamicprogramming;\n\npublic class LC070_ClimbingStairs_Easy_DP {\n\n    public static int climbStairs(int n) {\n        if (n <= 2) return n;\n        int prev = 2, prevPrev = 1;\n        for (int i = 3; i <= n; i++) {\n            int curr = prev + prevPrev;\n            prevPrev = prev;\n            prev = curr;\n        }\n        return prev;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(climbStairs(2)); // 2\n        System.out.println(climbStairs(3)); // 3\n    }\n}"
   },
   {
     "title": "Edit Distance (Levenshtein)",
@@ -348,7 +407,51 @@
     "space": "O(m*n)",
     "className": "LC072_EditDistance_Hard_DP",
     "packagePath": "com.leetcode.hard.dynamicprogramming",
-    "filePath": "hard/dynamicprogramming/LC072_EditDistance_Hard_DP.java"
+    "filePath": "hard/dynamicprogramming/LC072_EditDistance_Hard_DP.java",
+    "javaCode": "package com.leetcode.hard.dynamicprogramming;\n\npublic class LC072_EditDistance_Hard_DP {\n\n    public static int minDistance(String word1, String word2) {\n        int m = word1.length(), n = word2.length();\n        int[][] dp = new int[m + 1][n + 1];\n        for (int i = 0; i <= m; i++) dp[i][0] = i;\n        for (int j = 0; j <= n; j++) dp[0][j] = j;\n        for (int i = 1; i <= m; i++) {\n            for (int j = 1; j <= n; j++) {\n                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {\n                    dp[i][j] = dp[i - 1][j - 1];\n                } else {\n                    dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1]));\n                }\n            }\n        }\n        return dp[m][n];\n    }\n\n    public static void main(String[] args) {\n        System.out.println(minDistance(\"horse\", \"ros\"));   // 3\n        System.out.println(minDistance(\"intention\", \"execution\")); // 5\n    }\n}"
+  },
+  {
+    "title": "Minimum Window Substring",
+    "number": "LC076",
+    "difficulty": "Hard",
+    "type": "Sliding Window, Hash Map",
+    "tags": [
+      "slidingwindow",
+      "hashmap",
+      "string",
+      "faang"
+    ],
+    "statement": "* Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string \"\". *",
+    "constraints": "* m == s.length, n == t.length 1 \u2264 m, n \u2264 10\u2075 s and t consist of uppercase and lowercase English letters. *",
+    "examples": "Example 1:\nInput:  s = \"ADOBECODEBANC\", t = \"ABC\"\nOutput: \"BANC\"\nExplanation: \"BANC\" is the smallest window in s that contains all characters of t.\nExample 2:\nInput:  s = \"a\", t = \"a\"\nOutput: \"a\"\nExample 3:\nInput:  s = \"a\", t = \"aa\"\nOutput: \"\"\nExplanation: Both 'a's from t must be in the window, but s has only one 'a'.",
+    "approach": "Expand right pointer to satisfy the window, then shrink left pointer to minimise.\n * Track how many characters of t are satisfied with a frequency map and a \"formed\" counter.",
+    "time": "",
+    "space": "",
+    "className": "LC076_MinimumWindowSubstring_Hard_SlidingWindow",
+    "packagePath": "com.leetcode.hard.slidingwindow",
+    "filePath": "hard/slidingwindow/LC076_MinimumWindowSubstring_Hard_SlidingWindow.java",
+    "javaCode": "package com.leetcode.hard.slidingwindow;\n\nimport java.util.HashMap;\nimport java.util.Map;\n\npublic class LC076_MinimumWindowSubstring_Hard_SlidingWindow {\n\n    public static String minWindow(String s, String t) {\n        if (s == null || t == null || s.length() < t.length()) return \"\";\n\n        Map<Character, Integer> need = new HashMap<>();\n        for (char c : t.toCharArray()) need.merge(c, 1, Integer::sum);\n\n        int required = need.size();\n        int formed = 0;\n        Map<Character, Integer> windowCounts = new HashMap<>();\n\n        int left = 0;\n        int minLen = Integer.MAX_VALUE;\n        int minLeft = 0;\n\n        for (int right = 0; right < s.length(); right++) {\n            char c = s.charAt(right);\n            windowCounts.merge(c, 1, Integer::sum);\n\n            if (need.containsKey(c) && windowCounts.get(c).intValue() == need.get(c).intValue()) {\n                formed++;\n            }\n\n            while (formed == required) {\n                if (right - left + 1 < minLen) {\n                    minLen = right - left + 1;\n                    minLeft = left;\n                }\n                char leftChar = s.charAt(left);\n                windowCounts.merge(leftChar, -1, Integer::sum);\n                if (need.containsKey(leftChar)\n                        && windowCounts.get(leftChar) < need.get(leftChar)) {\n                    formed--;\n                }\n                left++;\n            }\n        }\n        return minLen == Integer.MAX_VALUE ? \"\" : s.substring(minLeft, minLeft + minLen);\n    }\n\n    public static void main(String[] args) {\n        System.out.println(minWindow(\"ADOBECODEBANC\", \"ABC\")); // BANC\n        System.out.println(minWindow(\"a\", \"a\"));               // a\n        System.out.println(minWindow(\"a\", \"aa\"));              // \"\"\n    }\n}"
+  },
+  {
+    "title": "Largest Rectangle in Histogram",
+    "number": "LC084",
+    "difficulty": "Hard",
+    "type": "Stack, Array",
+    "tags": [
+      "stack",
+      "array",
+      "faang"
+    ],
+    "statement": "* Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram. *",
+    "constraints": "* 1 \u2264 heights.length \u2264 10\u2075 0 \u2264 heights[i] \u2264 10\u2074 *",
+    "examples": "Example 1:\nInput:  heights = [2,1,5,6,2,3]\nOutput: 10\nExplanation: The largest rectangle has area = 10 (height 5 spanning indices 2\u20133).\nExample 2:\nInput:  heights = [2,4]\nOutput: 4",
+    "approach": "Monotonic increasing stack of indices. When a bar shorter than the stack top is\n * encountered, pop and compute the area with the popped bar as the shortest bar in the range.",
+    "time": "O(n)",
+    "space": "O(n)",
+    "className": "LC084_LargestRectangleInHistogram_Hard_Stack",
+    "packagePath": "com.leetcode.hard.stack",
+    "filePath": "hard/stack/LC084_LargestRectangleInHistogram_Hard_Stack.java",
+    "javaCode": "package com.leetcode.hard.stack;\n\nimport java.util.ArrayDeque;\nimport java.util.Deque;\n\npublic class LC084_LargestRectangleInHistogram_Hard_Stack {\n\n    public static int largestRectangleArea(int[] heights) {\n        Deque<Integer> stack = new ArrayDeque<>();\n        int maxArea = 0;\n        int n = heights.length;\n\n        for (int i = 0; i <= n; i++) {\n            int curHeight = (i == n) ? 0 : heights[i];\n            while (!stack.isEmpty() && curHeight < heights[stack.peek()]) {\n                int height = heights[stack.pop()];\n                int width = stack.isEmpty() ? i : i - stack.peek() - 1;\n                maxArea = Math.max(maxArea, height * width);\n            }\n            stack.push(i);\n        }\n        return maxArea;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(largestRectangleArea(new int[]{2, 1, 5, 6, 2, 3})); // 10\n        System.out.println(largestRectangleArea(new int[]{2, 4}));              // 4\n    }\n}"
   },
   {
     "title": "Validate Binary Search Tree",
@@ -368,7 +471,8 @@
     "space": "O(h)",
     "className": "LC098_ValidateBST_Medium_Tree",
     "packagePath": "com.leetcode.medium.tree",
-    "filePath": "medium/tree/LC098_ValidateBST_Medium_Tree.java"
+    "filePath": "medium/tree/LC098_ValidateBST_Medium_Tree.java",
+    "javaCode": "package com.leetcode.medium.tree;\n\npublic class LC098_ValidateBST_Medium_Tree {\n\n    public static class TreeNode {\n        int val;\n        TreeNode left, right;\n        TreeNode(int val) { this.val = val; }\n    }\n\n    public static boolean isValidBST(TreeNode root) {\n        return validate(root, null, null);\n    }\n\n    private static boolean validate(TreeNode node, Integer min, Integer max) {\n        if (node == null) return true;\n        if ((min != null && node.val <= min) || (max != null && node.val >= max)) return false;\n        return validate(node.left, min, node.val) && validate(node.right, node.val, max);\n    }\n\n    public static void main(String[] args) {\n        TreeNode valid = new TreeNode(2);\n        valid.left = new TreeNode(1);\n        valid.right = new TreeNode(3);\n        System.out.println(isValidBST(valid)); // true\n\n        TreeNode invalid = new TreeNode(5);\n        invalid.left = new TreeNode(1);\n        invalid.right = new TreeNode(4);\n        invalid.right.left = new TreeNode(3);\n        invalid.right.right = new TreeNode(6);\n        System.out.println(isValidBST(invalid)); // false\n    }\n}"
   },
   {
     "title": "Binary Tree Level Order Traversal",
@@ -388,7 +492,8 @@
     "space": "O(n)",
     "className": "LC102_BinaryTreeLevelOrder_Medium_Tree",
     "packagePath": "com.leetcode.medium.tree",
-    "filePath": "medium/tree/LC102_BinaryTreeLevelOrder_Medium_Tree.java"
+    "filePath": "medium/tree/LC102_BinaryTreeLevelOrder_Medium_Tree.java",
+    "javaCode": "package com.leetcode.medium.tree;\n\nimport java.util.ArrayList;\nimport java.util.LinkedList;\nimport java.util.List;\nimport java.util.Queue;\n\npublic class LC102_BinaryTreeLevelOrder_Medium_Tree {\n\n    public static class TreeNode {\n        int val;\n        TreeNode left, right;\n        TreeNode(int val) { this.val = val; }\n        TreeNode(int val, TreeNode left, TreeNode right) {\n            this.val = val; this.left = left; this.right = right;\n        }\n    }\n\n    public static List<List<Integer>> levelOrder(TreeNode root) {\n        List<List<Integer>> result = new ArrayList<>();\n        if (root == null) return result;\n        Queue<TreeNode> q = new LinkedList<>();\n        q.offer(root);\n        while (!q.isEmpty()) {\n            int size = q.size();\n            List<Integer> level = new ArrayList<>();\n            for (int i = 0; i < size; i++) {\n                TreeNode node = q.poll();\n                level.add(node.val);\n                if (node.left != null) q.offer(node.left);\n                if (node.right != null) q.offer(node.right);\n            }\n            result.add(level);\n        }\n        return result;\n    }\n\n    public static void main(String[] args) {\n        TreeNode root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));\n        System.out.println(levelOrder(root)); // [[3], [9, 20], [15, 7]]\n    }\n}"
   },
   {
     "title": "Maximum Depth of Binary Tree",
@@ -408,7 +513,8 @@
     "space": "O(h) - recursion stack",
     "className": "LC104_MaxDepth_Easy_Tree",
     "packagePath": "com.leetcode.easy.tree",
-    "filePath": "easy/tree/LC104_MaxDepth_Easy_Tree.java"
+    "filePath": "easy/tree/LC104_MaxDepth_Easy_Tree.java",
+    "javaCode": "package com.leetcode.easy.tree;\n\npublic class LC104_MaxDepth_Easy_Tree {\n\n    public static class TreeNode {\n        int val;\n        TreeNode left, right;\n\n        TreeNode(int val) {\n            this.val = val;\n        }\n\n        TreeNode(int val, TreeNode left, TreeNode right) {\n            this.val = val;\n            this.left = left;\n            this.right = right;\n        }\n    }\n\n    public static int maxDepth(TreeNode root) {\n        if (root == null) return 0;\n        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));\n    }\n\n    public static void main(String[] args) {\n        TreeNode node9 = new TreeNode(9);\n        TreeNode node15 = new TreeNode(15);\n        TreeNode node7 = new TreeNode(7);\n        TreeNode node20 = new TreeNode(20, node15, node7);\n        TreeNode root = new TreeNode(3, node9, node20);\n\n        System.out.println(maxDepth(root)); // 3\n    }\n}"
   },
   {
     "title": "Best Time to Buy and Sell Stock",
@@ -428,7 +534,8 @@
     "space": "O(1)",
     "className": "LC121_BestTimeToBuyStock_Easy_DP",
     "packagePath": "com.leetcode.easy.dynamicprogramming",
-    "filePath": "easy/dynamicprogramming/LC121_BestTimeToBuyStock_Easy_DP.java"
+    "filePath": "easy/dynamicprogramming/LC121_BestTimeToBuyStock_Easy_DP.java",
+    "javaCode": "package com.leetcode.easy.dynamicprogramming;\n\npublic class LC121_BestTimeToBuyStock_Easy_DP {\n\n    public static int maxProfit(int[] prices) {\n        int minPrice = Integer.MAX_VALUE, maxProfit = 0;\n        for (int p : prices) {\n            minPrice = Math.min(minPrice, p);\n            maxProfit = Math.max(maxProfit, p - minPrice);\n        }\n        return maxProfit;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(maxProfit(new int[]{7, 1, 5, 3, 6, 4})); // 5\n        System.out.println(maxProfit(new int[]{7, 6, 4, 3, 1}));   // 0\n    }\n}"
   },
   {
     "title": "Binary Tree Maximum Path Sum",
@@ -448,7 +555,8 @@
     "space": "O(h)",
     "className": "LC124_BinaryTreeMaxPathSum_Hard_Tree",
     "packagePath": "com.leetcode.hard.tree",
-    "filePath": "hard/tree/LC124_BinaryTreeMaxPathSum_Hard_Tree.java"
+    "filePath": "hard/tree/LC124_BinaryTreeMaxPathSum_Hard_Tree.java",
+    "javaCode": "package com.leetcode.hard.tree;\n\npublic class LC124_BinaryTreeMaxPathSum_Hard_Tree {\n\n    public static class TreeNode {\n        int val;\n        TreeNode left, right;\n        TreeNode(int val) { this.val = val; }\n        TreeNode(int val, TreeNode left, TreeNode right) {\n            this.val = val; this.left = left; this.right = right;\n        }\n    }\n\n    private static int maxSum;\n\n    public static int maxPathSum(TreeNode root) {\n        maxSum = Integer.MIN_VALUE;\n        gain(root);\n        return maxSum;\n    }\n\n    private static int gain(TreeNode node) {\n        if (node == null) return 0;\n        int left = Math.max(0, gain(node.left));\n        int right = Math.max(0, gain(node.right));\n        maxSum = Math.max(maxSum, node.val + left + right);\n        return node.val + Math.max(left, right);\n    }\n\n    public static void main(String[] args) {\n        TreeNode root = new TreeNode(-10, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));\n        System.out.println(maxPathSum(root)); // 42\n    }\n}"
   },
   {
     "title": "Valid Palindrome",
@@ -468,7 +576,8 @@
     "space": "O(1)",
     "className": "LC125_ValidPalindrome_Easy_TwoPointers",
     "packagePath": "com.leetcode.easy.twopointers",
-    "filePath": "easy/twopointers/LC125_ValidPalindrome_Easy_TwoPointers.java"
+    "filePath": "easy/twopointers/LC125_ValidPalindrome_Easy_TwoPointers.java",
+    "javaCode": "package com.leetcode.easy.twopointers;\n\npublic class LC125_ValidPalindrome_Easy_TwoPointers {\n\n    public static boolean isPalindrome(String s) {\n        int left = 0, right = s.length() - 1;\n        while (left < right) {\n            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) left++;\n            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) right--;\n            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right)))\n                return false;\n            left++;\n            right--;\n        }\n        return true;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(isPalindrome(\"A man, a plan, a canal: Panama\")); // true\n        System.out.println(isPalindrome(\"race a car\"));                     // false\n    }\n}"
   },
   {
     "title": "Word Ladder",
@@ -488,7 +597,30 @@
     "space": "O(N)",
     "className": "LC127_WordLadder_Hard_Graph",
     "packagePath": "com.leetcode.hard.graph",
-    "filePath": "hard/graph/LC127_WordLadder_Hard_Graph.java"
+    "filePath": "hard/graph/LC127_WordLadder_Hard_Graph.java",
+    "javaCode": "package com.leetcode.hard.graph;\n\nimport java.util.*;\n\npublic class LC127_WordLadder_Hard_Graph {\n\n    public static int ladderLength(String beginWord, String endWord, List<String> wordList) {\n        Set<String> set = new HashSet<>(wordList);\n        if (!set.contains(endWord)) return 0;\n        Queue<String> q = new LinkedList<>();\n        q.offer(beginWord);\n        int steps = 1;\n        while (!q.isEmpty()) {\n            int size = q.size();\n            for (int i = 0; i < size; i++) {\n                String word = q.poll();\n                if (word.equals(endWord)) return steps;\n                char[] arr = word.toCharArray();\n                for (int j = 0; j < arr.length; j++) {\n                    char orig = arr[j];\n                    for (char c = 'a'; c <= 'z'; c++) {\n                        if (c == orig) continue;\n                        arr[j] = c;\n                        String next = new String(arr);\n                        if (set.contains(next)) {\n                            set.remove(next);\n                            q.offer(next);\n                        }\n                    }\n                    arr[j] = orig;\n                }\n            }\n            steps++;\n        }\n        return 0;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(ladderLength(\"hit\", \"cog\", List.of(\"hot\", \"dot\", \"dog\", \"lot\", \"log\", \"cog\"))); // 5\n        System.out.println(ladderLength(\"hit\", \"cog\", List.of(\"hot\", \"dot\", \"dog\", \"lot\", \"log\")));        // 0\n    }\n}"
+  },
+  {
+    "title": "Clone Graph",
+    "number": "LC133",
+    "difficulty": "Medium",
+    "type": "Graph, DFS/BFS",
+    "tags": [
+      "graph",
+      "dfs",
+      "hashmap",
+      "faang"
+    ],
+    "statement": "* Given a reference of a node in a connected undirected graph , return a deep copy (clone) of the graph. Each node in the graph contains a value (int) and a list of its neighbors (List ). *",
+    "constraints": "* The number of nodes in the graph is in the range [0, 100]. 1 \u2264 Node.val \u2264 100 Node.val is unique for each node. There are no repeated edges and no self-loops. The graph is connected and all nodes can be visited starting from the given node. *",
+    "examples": "Example 1:\nInput:  adjList = [[2,4],[1,3],[2,4],[1,3]]\nOutput: [[2,4],[1,3],[2,4],[1,3]]\nExplanation: Node 1 \u2192 neighbors [2,4]; Node 2 \u2192 [1,3]; etc. Deep copy preserves structure.\nExample 2:\nInput:  adjList = [[]]\nOutput: [[]]\nExplanation: Single node with no neighbors.\nExample 3:\nInput:  adjList = []\nOutput: []\nExplanation: Empty graph.",
+    "approach": "DFS with a visited map (original \u2192 clone). For each node, create its clone,\n * then recursively clone each neighbor.",
+    "time": "O(V + E)",
+    "space": "O(V)",
+    "className": "LC133_CloneGraph_Medium_Graph",
+    "packagePath": "com.leetcode.medium.graph",
+    "filePath": "medium/graph/LC133_CloneGraph_Medium_Graph.java",
+    "javaCode": "package com.leetcode.medium.graph;\n\nimport java.util.ArrayList;\nimport java.util.HashMap;\nimport java.util.List;\nimport java.util.Map;\n\npublic class LC133_CloneGraph_Medium_Graph {\n\n    public static class Node {\n        public int val;\n        public List<Node> neighbors;\n        public Node(int val) {\n            this.val = val;\n            this.neighbors = new ArrayList<>();\n        }\n    }\n\n    private final Map<Node, Node> visited = new HashMap<>();\n\n    public Node cloneGraph(Node node) {\n        if (node == null) return null;\n        if (visited.containsKey(node)) return visited.get(node);\n\n        Node clone = new Node(node.val);\n        visited.put(node, clone);\n        for (Node neighbor : node.neighbors) {\n            clone.neighbors.add(cloneGraph(neighbor));\n        }\n        return clone;\n    }\n\n    public static void main(String[] args) {\n        Node n1 = new Node(1), n2 = new Node(2), n3 = new Node(3), n4 = new Node(4);\n        n1.neighbors.add(n2); n1.neighbors.add(n4);\n        n2.neighbors.add(n1); n2.neighbors.add(n3);\n        n3.neighbors.add(n2); n3.neighbors.add(n4);\n        n4.neighbors.add(n1); n4.neighbors.add(n3);\n\n        LC133_CloneGraph_Medium_Graph solver = new LC133_CloneGraph_Medium_Graph();\n        Node cloned = solver.cloneGraph(n1);\n        System.out.println(\"Cloned node 1 val: \" + cloned.val);                     // 1\n        System.out.println(\"Cloned node 1 neighbors: \"\n                + cloned.neighbors.get(0).val + \", \" + cloned.neighbors.get(1).val); // 2, 4\n        System.out.println(\"Is deep copy: \" + (cloned != n1));                       // true\n    }\n}"
   },
   {
     "title": "Single Number",
@@ -507,7 +639,30 @@
     "space": "O(1)",
     "className": "LC136_SingleNumber_Easy_BitManipulation",
     "packagePath": "com.leetcode.easy.bitmanipulation",
-    "filePath": "easy/bitmanipulation/LC136_SingleNumber_Easy_BitManipulation.java"
+    "filePath": "easy/bitmanipulation/LC136_SingleNumber_Easy_BitManipulation.java",
+    "javaCode": "package com.leetcode.easy.bitmanipulation;\n\npublic class LC136_SingleNumber_Easy_BitManipulation {\n\n    public static int singleNumber(int[] nums) {\n        int result = 0;\n        for (int n : nums) result ^= n;\n        return result;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(singleNumber(new int[]{2, 2, 1}));           // 1\n        System.out.println(singleNumber(new int[]{4, 1, 2, 1, 2}));   // 4\n    }\n}"
+  },
+  {
+    "title": "LRU Cache",
+    "number": "LC146",
+    "difficulty": "Medium",
+    "type": "Design, HashMap + Doubly Linked List",
+    "tags": [
+      "design",
+      "hashmap",
+      "linkedlist",
+      "faang"
+    ],
+    "statement": "* Design a data structure that follows the constraints of a Least Recently Used (LRU) cache . Implement the LRUCache class: * LRUCache(int capacity) \u2014 initialise with positive capacity. int get(int key) \u2014 return the value if the key exists, otherwise -1. void put(int key, int value) \u2014 update or insert. If capacity exceeded, evict the least recently used key before inserting. * Both operations must run in O(1) average time. *",
+    "constraints": "* 1 \u2264 capacity \u2264 3000 0 \u2264 key \u2264 10\u2074 0 \u2264 value \u2264 10\u2075 At most 2 \u00d7 10\u2075 calls to get and put. *",
+    "examples": "Example 1:\nInput:  [\"LRUCache\",\"put\",\"put\",\"get\",\"put\",\"get\",\"put\",\"get\",\"get\",\"get\"]\n[[2],[1,1],[2,2],[1],[3,3],[2],[4,4],[1],[3],[4]]\nOutput: [null,null,null,1,null,-1,null,-1,3,4]",
+    "approach": "HashMap for O(1) lookup + doubly-linked list for O(1) insertion/removal at\n * head/tail. Most-recently-used nodes are moved to the head; eviction removes from the tail.",
+    "time": "O(1) per operation",
+    "space": "O(capacity)",
+    "className": "LC146_LRUCache_Medium_Design",
+    "packagePath": "com.leetcode.medium.design",
+    "filePath": "medium/design/LC146_LRUCache_Medium_Design.java",
+    "javaCode": "package com.leetcode.medium.design;\n\nimport java.util.HashMap;\nimport java.util.Map;\n\npublic class LC146_LRUCache_Medium_Design {\n\n    private static class Node {\n        int key, value;\n        Node prev, next;\n        Node(int key, int value) { this.key = key; this.value = value; }\n    }\n\n    private final int capacity;\n    private final Map<Integer, Node> map;\n    private final Node head, tail;\n\n    public LC146_LRUCache_Medium_Design(int capacity) {\n        this.capacity = capacity;\n        this.map = new HashMap<>();\n        head = new Node(0, 0);\n        tail = new Node(0, 0);\n        head.next = tail;\n        tail.prev = head;\n    }\n\n    public int get(int key) {\n        if (!map.containsKey(key)) return -1;\n        Node node = map.get(key);\n        remove(node);\n        insertAtHead(node);\n        return node.value;\n    }\n\n    public void put(int key, int value) {\n        if (map.containsKey(key)) {\n            Node node = map.get(key);\n            node.value = value;\n            remove(node);\n            insertAtHead(node);\n        } else {\n            if (map.size() == capacity) {\n                Node lru = tail.prev;\n                remove(lru);\n                map.remove(lru.key);\n            }\n            Node node = new Node(key, value);\n            map.put(key, node);\n            insertAtHead(node);\n        }\n    }\n\n    private void remove(Node node) {\n        node.prev.next = node.next;\n        node.next.prev = node.prev;\n    }\n\n    private void insertAtHead(Node node) {\n        node.next = head.next;\n        node.prev = head;\n        head.next.prev = node;\n        head.next = node;\n    }\n\n    public static void main(String[] args) {\n        LC146_LRUCache_Medium_Design cache = new LC146_LRUCache_Medium_Design(2);\n        cache.put(1, 1);\n        cache.put(2, 2);\n        System.out.println(cache.get(1));  // 1\n        cache.put(3, 3);                   // evicts key 2\n        System.out.println(cache.get(2));  // -1\n        cache.put(4, 4);                   // evicts key 1\n        System.out.println(cache.get(1));  // -1\n        System.out.println(cache.get(3));  // 3\n        System.out.println(cache.get(4));  // 4\n    }\n}"
   },
   {
     "title": "Min Stack",
@@ -526,7 +681,8 @@
     "space": "O(n)",
     "className": "LC155_MinStack_Easy_Stack",
     "packagePath": "com.leetcode.easy.stack",
-    "filePath": "easy/stack/LC155_MinStack_Easy_Stack.java"
+    "filePath": "easy/stack/LC155_MinStack_Easy_Stack.java",
+    "javaCode": "package com.leetcode.easy.stack;\n\nimport java.util.ArrayDeque;\nimport java.util.Deque;\n\npublic class LC155_MinStack_Easy_Stack {\n\n    private final Deque<Integer> stack = new ArrayDeque<>();\n    private final Deque<Integer> minStack = new ArrayDeque<>();\n\n    public void push(int val) {\n        stack.push(val);\n        minStack.push(minStack.isEmpty() ? val : Math.min(minStack.peek(), val));\n    }\n\n    public void pop() {\n        stack.pop();\n        minStack.pop();\n    }\n\n    public int top() { return stack.peek(); }\n    public int getMin() { return minStack.peek(); }\n\n    public static void main(String[] args) {\n        LC155_MinStack_Easy_Stack st = new LC155_MinStack_Easy_Stack();\n        st.push(-2); st.push(0); st.push(-3);\n        System.out.println(st.getMin()); // -3\n        st.pop();\n        System.out.println(st.top());    // 0\n        System.out.println(st.getMin()); // -2\n    }\n}"
   },
   {
     "title": "Number of 1 Bits (Hamming Weight)",
@@ -545,7 +701,8 @@
     "space": "O(1)",
     "className": "LC191_NumberOfOneBits_Easy_BitManipulation",
     "packagePath": "com.leetcode.easy.bitmanipulation",
-    "filePath": "easy/bitmanipulation/LC191_NumberOfOneBits_Easy_BitManipulation.java"
+    "filePath": "easy/bitmanipulation/LC191_NumberOfOneBits_Easy_BitManipulation.java",
+    "javaCode": "package com.leetcode.easy.bitmanipulation;\n\npublic class LC191_NumberOfOneBits_Easy_BitManipulation {\n\n    public static int hammingWeight(int n) {\n        int count = 0;\n        while (n != 0) {\n            n &= (n - 1);\n            count++;\n        }\n        return count;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(hammingWeight(11));   // 3 (1011)\n        System.out.println(hammingWeight(128));  // 1\n    }\n}"
   },
   {
     "title": "Number of Islands",
@@ -565,7 +722,8 @@
     "space": "O(m*n) - recursion",
     "className": "LC200_NumberOfIslands_Medium_Graph",
     "packagePath": "com.leetcode.medium.graph",
-    "filePath": "medium/graph/LC200_NumberOfIslands_Medium_Graph.java"
+    "filePath": "medium/graph/LC200_NumberOfIslands_Medium_Graph.java",
+    "javaCode": "package com.leetcode.medium.graph;\n\npublic class LC200_NumberOfIslands_Medium_Graph {\n\n    public static int numIslands(char[][] grid) {\n        if (grid == null || grid.length == 0) return 0;\n        int count = 0;\n        for (int r = 0; r < grid.length; r++) {\n            for (int c = 0; c < grid[0].length; c++) {\n                if (grid[r][c] == '1') {\n                    dfs(grid, r, c);\n                    count++;\n                }\n            }\n        }\n        return count;\n    }\n\n    private static void dfs(char[][] grid, int r, int c) {\n        if (r < 0 || r >= grid.length || c < 0 || c >= grid[0].length || grid[r][c] != '1')\n            return;\n        grid[r][c] = '0';\n        dfs(grid, r + 1, c);\n        dfs(grid, r - 1, c);\n        dfs(grid, r, c + 1);\n        dfs(grid, r, c - 1);\n    }\n\n    public static void main(String[] args) {\n        char[][] grid = {\n            {'1','1','1','1','0'},\n            {'1','1','0','1','0'},\n            {'1','1','0','0','0'},\n            {'0','0','0','0','0'}\n        };\n        System.out.println(numIslands(grid)); // 1\n    }\n}"
   },
   {
     "title": "Happy Number",
@@ -584,7 +742,8 @@
     "space": "O(log n)",
     "className": "LC202_HappyNumber_Easy_HashMap",
     "packagePath": "com.leetcode.easy.hashmap",
-    "filePath": "easy/hashmap/LC202_HappyNumber_Easy_HashMap.java"
+    "filePath": "easy/hashmap/LC202_HappyNumber_Easy_HashMap.java",
+    "javaCode": "package com.leetcode.easy.hashmap;\n\nimport java.util.HashSet;\nimport java.util.Set;\n\npublic class LC202_HappyNumber_Easy_HashMap {\n\n    public static boolean isHappy(int n) {\n        Set<Integer> seen = new HashSet<>();\n        while (n != 1 && !seen.contains(n)) {\n            seen.add(n);\n            n = sumSquares(n);\n        }\n        return n == 1;\n    }\n\n    private static int sumSquares(int n) {\n        int sum = 0;\n        while (n > 0) {\n            int d = n % 10;\n            sum += d * d;\n            n /= 10;\n        }\n        return sum;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(isHappy(19));  // true\n        System.out.println(isHappy(2));   // false\n    }\n}"
   },
   {
     "title": "Reverse Linked List",
@@ -603,7 +762,8 @@
     "space": "O(1)",
     "className": "LC206_ReverseLinkedList_Easy_LinkedList",
     "packagePath": "com.leetcode.easy.linkedlist",
-    "filePath": "easy/linkedlist/LC206_ReverseLinkedList_Easy_LinkedList.java"
+    "filePath": "easy/linkedlist/LC206_ReverseLinkedList_Easy_LinkedList.java",
+    "javaCode": "package com.leetcode.easy.linkedlist;\n\npublic class LC206_ReverseLinkedList_Easy_LinkedList {\n\n    public static class ListNode {\n        int val;\n        ListNode next;\n        ListNode(int val) { this.val = val; }\n        ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n    }\n\n    public static ListNode reverseList(ListNode head) {\n        ListNode prev = null;\n        while (head != null) {\n            ListNode next = head.next;\n            head.next = prev;\n            prev = head;\n            head = next;\n        }\n        return prev;\n    }\n\n    public static void main(String[] args) {\n        ListNode head = new ListNode(1, new ListNode(2, new ListNode(3)));\n        ListNode reversed = reverseList(head);\n        while (reversed != null) {\n            System.out.print(reversed.val + \" \");\n            reversed = reversed.next;\n        }\n        System.out.println(); // 3 2 1\n    }\n}"
   },
   {
     "title": "Course Schedule",
@@ -623,7 +783,30 @@
     "space": "O(V)",
     "className": "LC207_CourseSchedule_Medium_Graph",
     "packagePath": "com.leetcode.medium.graph",
-    "filePath": "medium/graph/LC207_CourseSchedule_Medium_Graph.java"
+    "filePath": "medium/graph/LC207_CourseSchedule_Medium_Graph.java",
+    "javaCode": "package com.leetcode.medium.graph;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class LC207_CourseSchedule_Medium_Graph {\n\n    public static boolean canFinish(int numCourses, int[][] prerequisites) {\n        List<List<Integer>> graph = new ArrayList<>();\n        for (int i = 0; i < numCourses; i++) graph.add(new ArrayList<>());\n        for (int[] p : prerequisites) graph.get(p[1]).add(p[0]);\n        int[] state = new int[numCourses]; // 0=unvisited, 1=visiting, 2=done\n        for (int i = 0; i < numCourses; i++)\n            if (hasCycle(graph, i, state)) return false;\n        return true;\n    }\n\n    private static boolean hasCycle(List<List<Integer>> graph, int v, int[] state) {\n        if (state[v] == 1) return true;\n        if (state[v] == 2) return false;\n        state[v] = 1;\n        for (int u : graph.get(v))\n            if (hasCycle(graph, u, state)) return true;\n        state[v] = 2;\n        return false;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(canFinish(2, new int[][]{{1, 0}}));           // true\n        System.out.println(canFinish(2, new int[][]{{1, 0}, {0, 1}})); // false\n    }\n}"
+  },
+  {
+    "title": "Course Schedule II (Topological Sort)",
+    "number": "LC210",
+    "difficulty": "Medium",
+    "type": "Graph, Topological Sort (BFS / Kahn's Algorithm)",
+    "tags": [
+      "graph",
+      "topologicalsort",
+      "bfs",
+      "faang"
+    ],
+    "statement": "* There are a total of numCourses courses you have to take, labeled 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [a, b] indicates that you must take course b before course a. Return the ordering of courses you should take to finish all courses. If it is impossible, return an empty array. *",
+    "constraints": "* 1 \u2264 numCourses \u2264 2000 0 \u2264 prerequisites.length \u2264 numCourses \u00d7 (numCourses - 1) prerequisites[i].length == 2 0 \u2264 a, b < numCourses a \u2260 b All pairs [a, b] are distinct. *",
+    "examples": "Example 1:\nInput:  numCourses = 2, prerequisites = [[1,0]]\nOutput: [0,1]\nExample 2:\nInput:  numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]\nOutput: [0,1,2,3] or [0,2,1,3]\nExample 3:\nInput:  numCourses = 1, prerequisites = []\nOutput: [0]",
+    "approach": "Kahn's algorithm \u2014 BFS with in-degree array. Enqueue all nodes with in-degree 0,\n * then process each, decrementing neighbors' in-degrees. If all nodes are processed, return the\n * order; otherwise a cycle exists.",
+    "time": "O(V + E)",
+    "space": "O(V + E)",
+    "className": "LC210_CourseScheduleII_Medium_Graph",
+    "packagePath": "com.leetcode.medium.graph",
+    "filePath": "medium/graph/LC210_CourseScheduleII_Medium_Graph.java",
+    "javaCode": "package com.leetcode.medium.graph;\n\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.LinkedList;\nimport java.util.List;\nimport java.util.Queue;\n\npublic class LC210_CourseScheduleII_Medium_Graph {\n\n    public static int[] findOrder(int numCourses, int[][] prerequisites) {\n        List<List<Integer>> adj = new ArrayList<>();\n        int[] inDegree = new int[numCourses];\n        for (int i = 0; i < numCourses; i++) adj.add(new ArrayList<>());\n\n        for (int[] pre : prerequisites) {\n            adj.get(pre[1]).add(pre[0]);\n            inDegree[pre[0]]++;\n        }\n\n        Queue<Integer> queue = new LinkedList<>();\n        for (int i = 0; i < numCourses; i++) {\n            if (inDegree[i] == 0) queue.offer(i);\n        }\n\n        int[] order = new int[numCourses];\n        int idx = 0;\n        while (!queue.isEmpty()) {\n            int course = queue.poll();\n            order[idx++] = course;\n            for (int next : adj.get(course)) {\n                if (--inDegree[next] == 0) queue.offer(next);\n            }\n        }\n        return idx == numCourses ? order : new int[0];\n    }\n\n    public static void main(String[] args) {\n        System.out.println(Arrays.toString(\n                findOrder(2, new int[][]{{1, 0}}))); // [0, 1]\n        System.out.println(Arrays.toString(\n                findOrder(4, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}}))); // [0,1,2,3] or [0,2,1,3]\n        System.out.println(Arrays.toString(\n                findOrder(1, new int[][]{}))); // [0]\n    }\n}"
   },
   {
     "title": "Kth Largest Element in an Array",
@@ -642,7 +825,8 @@
     "space": "O(k)",
     "className": "LC215_KthLargest_Medium_Heap",
     "packagePath": "com.leetcode.medium.heap",
-    "filePath": "medium/heap/LC215_KthLargest_Medium_Heap.java"
+    "filePath": "medium/heap/LC215_KthLargest_Medium_Heap.java",
+    "javaCode": "package com.leetcode.medium.heap;\n\nimport java.util.PriorityQueue;\n\npublic class LC215_KthLargest_Medium_Heap {\n\n    public static int findKthLargest(int[] nums, int k) {\n        PriorityQueue<Integer> minHeap = new PriorityQueue<>();\n        for (int n : nums) {\n            minHeap.offer(n);\n            if (minHeap.size() > k) minHeap.poll();\n        }\n        return minHeap.peek();\n    }\n\n    public static void main(String[] args) {\n        System.out.println(findKthLargest(new int[]{3, 2, 1, 5, 6, 4}, 2)); // 5\n        System.out.println(findKthLargest(new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4)); // 4\n    }\n}"
   },
   {
     "title": "Invert Binary Tree",
@@ -661,7 +845,30 @@
     "space": "O(h)",
     "className": "LC226_InvertBinaryTree_Easy_Tree",
     "packagePath": "com.leetcode.easy.tree",
-    "filePath": "easy/tree/LC226_InvertBinaryTree_Easy_Tree.java"
+    "filePath": "easy/tree/LC226_InvertBinaryTree_Easy_Tree.java",
+    "javaCode": "package com.leetcode.easy.tree;\n\npublic class LC226_InvertBinaryTree_Easy_Tree {\n\n    public static class TreeNode {\n        int val;\n        TreeNode left, right;\n        TreeNode(int val) { this.val = val; }\n        TreeNode(int val, TreeNode left, TreeNode right) {\n            this.val = val; this.left = left; this.right = right;\n        }\n    }\n\n    public static TreeNode invertTree(TreeNode root) {\n        if (root == null) return null;\n        TreeNode t = root.left;\n        root.left = invertTree(root.right);\n        root.right = invertTree(t);\n        return root;\n    }\n\n    public static void main(String[] args) {\n        TreeNode root = new TreeNode(4, new TreeNode(2, new TreeNode(1), new TreeNode(3)),\n                new TreeNode(7, new TreeNode(6), new TreeNode(9)));\n        invertTree(root);\n        System.out.println(root.left.val + \" \" + root.right.val); // 7 2\n    }\n}"
+  },
+  {
+    "title": "Lowest Common Ancestor of a Binary Tree",
+    "number": "LC236",
+    "difficulty": "Medium",
+    "type": "Tree, DFS",
+    "tags": [
+      "tree",
+      "dfs",
+      "recursion",
+      "faang"
+    ],
+    "statement": "* Given a binary tree, find the lowest common ancestor (LCA) of two given nodes p and q. The LCA is defined as the lowest node in the tree that has both p and q as descendants (where a node can be a descendant of itself). *",
+    "constraints": "* The number of nodes in the tree is in the range [2, 10\u2075]. -10\u2079 \u2264 Node.val \u2264 10\u2079 All Node.val are unique. p \u2260 q p and q will exist in the tree. *",
+    "examples": "Example 1:\nInput:  root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1\nOutput: 3\nExplanation: The LCA of nodes 5 and 1 is 3.\nExample 2:\nInput:  root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4\nOutput: 5\nExplanation: The LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself.\nExample 3:\nInput:  root = [1,2], p = 1, q = 2\nOutput: 1",
+    "approach": "Post-order DFS. If current node is p or q, return it. Recurse left and right.\n * If both sides return non-null, current node is the LCA. Otherwise propagate the non-null side.",
+    "time": "O(n)",
+    "space": "O(n) \u2014 recursion stack",
+    "className": "LC236_LowestCommonAncestor_Medium_Tree",
+    "packagePath": "com.leetcode.medium.tree",
+    "filePath": "medium/tree/LC236_LowestCommonAncestor_Medium_Tree.java",
+    "javaCode": "package com.leetcode.medium.tree;\n\npublic class LC236_LowestCommonAncestor_Medium_Tree {\n\n    public static class TreeNode {\n        int val;\n        TreeNode left, right;\n        TreeNode(int val) { this.val = val; }\n    }\n\n    public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n        if (root == null || root == p || root == q) return root;\n        TreeNode left = lowestCommonAncestor(root.left, p, q);\n        TreeNode right = lowestCommonAncestor(root.right, p, q);\n        if (left != null && right != null) return root;\n        return left != null ? left : right;\n    }\n\n    public static void main(String[] args) {\n        TreeNode root = new TreeNode(3);\n        TreeNode n5 = new TreeNode(5);\n        TreeNode n1 = new TreeNode(1);\n        TreeNode n6 = new TreeNode(6);\n        TreeNode n2 = new TreeNode(2);\n        TreeNode n0 = new TreeNode(0);\n        TreeNode n8 = new TreeNode(8);\n        TreeNode n7 = new TreeNode(7);\n        TreeNode n4 = new TreeNode(4);\n\n        root.left = n5;  root.right = n1;\n        n5.left = n6;    n5.right = n2;\n        n1.left = n0;    n1.right = n8;\n        n2.left = n7;    n2.right = n4;\n\n        System.out.println(lowestCommonAncestor(root, n5, n1).val); // 3\n        System.out.println(lowestCommonAncestor(root, n5, n4).val); // 5\n    }\n}"
   },
   {
     "title": "Product of Array Except Self",
@@ -680,7 +887,29 @@
     "space": "O(1) excluding output",
     "className": "LC238_ProductExceptSelf_Medium_Array",
     "packagePath": "com.leetcode.medium.array",
-    "filePath": "medium/array/LC238_ProductExceptSelf_Medium_Array.java"
+    "filePath": "medium/array/LC238_ProductExceptSelf_Medium_Array.java",
+    "javaCode": "package com.leetcode.medium.array;\n\npublic class LC238_ProductExceptSelf_Medium_Array {\n\n    public static int[] productExceptSelf(int[] nums) {\n        int n = nums.length;\n        int[] result = new int[n];\n        result[0] = 1;\n        for (int i = 1; i < n; i++) result[i] = result[i - 1] * nums[i - 1];\n        int right = 1;\n        for (int i = n - 1; i >= 0; i--) {\n            result[i] *= right;\n            right *= nums[i];\n        }\n        return result;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(java.util.Arrays.toString(productExceptSelf(new int[]{1, 2, 3, 4})));\n\n    }\n}"
+  },
+  {
+    "title": "Sliding Window Maximum",
+    "number": "LC239",
+    "difficulty": "Hard",
+    "type": "Sliding Window, Monotonic Deque",
+    "tags": [
+      "slidingwindow",
+      "deque",
+      "faang"
+    ],
+    "statement": "* You are given an array of integers nums, there is a sliding window of size k which moves from the very left to the very right. You can only see the k numbers in the window. Each time the window moves right by one position. Return the max sliding window. *",
+    "constraints": "* 1 \u2264 nums.length \u2264 10\u2075 -10\u2074 \u2264 nums[i] \u2264 10\u2074 1 \u2264 k \u2264 nums.length *",
+    "examples": "Example 1:\nInput:  nums = [1,3,-1,-3,5,3,6,7], k = 3\nOutput: [3,3,5,5,6,7]\nExplanation:\nWindow [1,3,-1]    \u2192 max = 3\nWindow [3,-1,-3]   \u2192 max = 3\nWindow [-1,-3,5]   \u2192 max = 5\nWindow [-3,5,3]    \u2192 max = 5\nWindow [5,3,6]     \u2192 max = 6\nWindow [3,6,7]     \u2192 max = 7\nExample 2:\nInput:  nums = [1], k = 1\nOutput: [1]",
+    "approach": "Monotonic decreasing deque of indices. The front of the deque always holds the\n * index of the current window maximum.",
+    "time": "O(n)",
+    "space": "O(k)",
+    "className": "LC239_SlidingWindowMaximum_Hard_SlidingWindow",
+    "packagePath": "com.leetcode.hard.slidingwindow",
+    "filePath": "hard/slidingwindow/LC239_SlidingWindowMaximum_Hard_SlidingWindow.java",
+    "javaCode": "package com.leetcode.hard.slidingwindow;\n\nimport java.util.ArrayDeque;\nimport java.util.Arrays;\nimport java.util.Deque;\n\npublic class LC239_SlidingWindowMaximum_Hard_SlidingWindow {\n\n    public static int[] maxSlidingWindow(int[] nums, int k) {\n        if (nums == null || nums.length == 0) return new int[0];\n\n        int n = nums.length;\n        int[] result = new int[n - k + 1];\n        Deque<Integer> deque = new ArrayDeque<>();\n\n        for (int i = 0; i < n; i++) {\n            while (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {\n                deque.pollFirst();\n            }\n            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {\n                deque.pollLast();\n            }\n            deque.offerLast(i);\n            if (i >= k - 1) {\n                result[i - k + 1] = nums[deque.peekFirst()];\n            }\n        }\n        return result;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(Arrays.toString(\n                maxSlidingWindow(new int[]{1, 3, -1, -3, 5, 3, 6, 7}, 3))); // [3,3,5,5,6,7]\n        System.out.println(Arrays.toString(\n                maxSlidingWindow(new int[]{1}, 1)));                          // [1]\n    }\n}"
   },
   {
     "title": "Valid Anagram",
@@ -700,7 +929,8 @@
     "space": "O(1) - fixed 26 chars",
     "className": "LC242_ValidAnagram_Easy_HashMap",
     "packagePath": "com.leetcode.easy.hashmap",
-    "filePath": "easy/hashmap/LC242_ValidAnagram_Easy_HashMap.java"
+    "filePath": "easy/hashmap/LC242_ValidAnagram_Easy_HashMap.java",
+    "javaCode": "package com.leetcode.easy.hashmap;\n\nimport java.util.HashMap;\nimport java.util.Map;\n\npublic class LC242_ValidAnagram_Easy_HashMap {\n\n    public static boolean isAnagram(String s, String t) {\n        if (s.length() != t.length()) return false;\n        Map<Character, Integer> count = new HashMap<>();\n        for (char c : s.toCharArray()) count.merge(c, 1, Integer::sum);\n        for (char c : t.toCharArray()) {\n            count.merge(c, -1, Integer::sum);\n            if (count.get(c) < 0) return false;\n        }\n        return true;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(isAnagram(\"anagram\", \"nagaram\")); // true\n        System.out.println(isAnagram(\"rat\", \"car\"));         // false\n    }\n}"
   },
   {
     "title": "Alien Dictionary (Premium)",
@@ -720,7 +950,8 @@
     "space": "O(1)",
     "className": "LC269_AlienDictionary_Hard_Graph",
     "packagePath": "com.leetcode.hard.graph",
-    "filePath": "hard/graph/LC269_AlienDictionary_Hard_Graph.java"
+    "filePath": "hard/graph/LC269_AlienDictionary_Hard_Graph.java",
+    "javaCode": "package com.leetcode.hard.graph;\n\nimport java.util.*;\n\npublic class LC269_AlienDictionary_Hard_Graph {\n\n    public static String alienOrder(String[] words) {\n        Map<Character, Set<Character>> graph = new HashMap<>();\n        Map<Character, Integer> inDegree = new HashMap<>();\n        for (String w : words)\n            for (char c : w.toCharArray())\n                inDegree.putIfAbsent(c, 0);\n        for (int i = 0; i < words.length - 1; i++) {\n            String a = words[i], b = words[i + 1];\n            if (a.length() > b.length() && a.startsWith(b)) return \"\";\n            for (int j = 0; j < Math.min(a.length(), b.length()); j++) {\n                char c1 = a.charAt(j), c2 = b.charAt(j);\n                if (c1 != c2) {\n                    if (graph.computeIfAbsent(c1, k -> new HashSet<>()).add(c2))\n                        inDegree.merge(c2, 1, Integer::sum);\n                    break;\n                }\n            }\n        }\n        Queue<Character> q = new LinkedList<>();\n        for (Map.Entry<Character, Integer> e : inDegree.entrySet())\n            if (e.getValue() == 0) q.offer(e.getKey());\n        StringBuilder sb = new StringBuilder();\n        while (!q.isEmpty()) {\n            char c = q.poll();\n            sb.append(c);\n            for (char next : graph.getOrDefault(c, Collections.emptySet())) {\n                inDegree.merge(next, -1, Integer::sum);\n                if (inDegree.get(next) == 0) q.offer(next);\n            }\n        }\n        return sb.length() == inDegree.size() ? sb.toString() : \"\";\n    }\n\n    public static void main(String[] args) {\n        System.out.println(alienOrder(new String[]{\"wrt\", \"wrf\", \"er\", \"ett\", \"rftt\"})); // wertf\n    }\n}"
   },
   {
     "title": "Move Zeroes",
@@ -740,7 +971,29 @@
     "space": "O(1)",
     "className": "LC283_MoveZeroes_Easy_TwoPointers",
     "packagePath": "com.leetcode.easy.twopointers",
-    "filePath": "easy/twopointers/LC283_MoveZeroes_Easy_TwoPointers.java"
+    "filePath": "easy/twopointers/LC283_MoveZeroes_Easy_TwoPointers.java",
+    "javaCode": "package com.leetcode.easy.twopointers;\n\npublic class LC283_MoveZeroes_Easy_TwoPointers {\n\n    public static void moveZeroes(int[] nums) {\n        int write = 0;\n        for (int i = 0; i < nums.length; i++) {\n            if (nums[i] != 0) nums[write++] = nums[i];\n        }\n        while (write < nums.length) nums[write++] = 0;\n    }\n\n    public static void main(String[] args) {\n        int[] nums = {0, 1, 0, 3, 12};\n        moveZeroes(nums);\n        System.out.println(java.util.Arrays.toString(nums)); // [1, 3, 12, 0, 0]\n    }\n}"
+  },
+  {
+    "title": "Find Median from Data Stream",
+    "number": "LC295",
+    "difficulty": "Hard",
+    "type": "Heap / Priority Queue, Design",
+    "tags": [
+      "heap",
+      "design",
+      "faang"
+    ],
+    "statement": "* The median is the middle value in an ordered integer list. If the size is even, the median is the mean of the two middle values. Implement the MedianFinder class: * MedianFinder() \u2014 initialises the object. void addNum(int num) \u2014 adds the integer to the data structure. double findMedian() \u2014 returns the median of all elements so far. *",
+    "constraints": "* -10\u2075 \u2264 num \u2264 10\u2075 There will be at least one element before calling findMedian. At most 5 \u00d7 10\u2074 calls to addNum and findMedian. *",
+    "examples": "Example 1:\nInput:  [\"MedianFinder\",\"addNum\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\"]\n[[],[1],[2],[],[3],[]]\nOutput: [null,null,null,1.5,null,2.0]\nExplanation: After addNum(1) and addNum(2), median = (1+2)/2 = 1.5.\nAfter addNum(3), median = 2.0.",
+    "approach": "Two heaps \u2014 a max-heap for the lower half and a min-heap for the upper half.\n * Keep them balanced so the median is always available from the heap tops.",
+    "time": "O(log n) addNum, O(1) findMedian",
+    "space": "O(n)",
+    "className": "LC295_FindMedianFromDataStream_Hard_Heap",
+    "packagePath": "com.leetcode.hard.heap",
+    "filePath": "hard/heap/LC295_FindMedianFromDataStream_Hard_Heap.java",
+    "javaCode": "package com.leetcode.hard.heap;\n\nimport java.util.Collections;\nimport java.util.PriorityQueue;\n\npublic class LC295_FindMedianFromDataStream_Hard_Heap {\n\n    private final PriorityQueue<Integer> lo; // max-heap: lower half\n    private final PriorityQueue<Integer> hi; // min-heap: upper half\n\n    public LC295_FindMedianFromDataStream_Hard_Heap() {\n        lo = new PriorityQueue<>(Collections.reverseOrder());\n        hi = new PriorityQueue<>();\n    }\n\n    public void addNum(int num) {\n        lo.offer(num);\n        hi.offer(lo.poll());\n        if (hi.size() > lo.size()) {\n            lo.offer(hi.poll());\n        }\n    }\n\n    public double findMedian() {\n        if (lo.size() > hi.size()) return lo.peek();\n        return (lo.peek() + hi.peek()) / 2.0;\n    }\n\n    public static void main(String[] args) {\n        LC295_FindMedianFromDataStream_Hard_Heap mf = new LC295_FindMedianFromDataStream_Hard_Heap();\n        mf.addNum(1);\n        mf.addNum(2);\n        System.out.println(mf.findMedian()); // 1.5\n        mf.addNum(3);\n        System.out.println(mf.findMedian()); // 2.0\n    }\n}"
   },
   {
     "title": "Serialize and Deserialize Binary Tree",
@@ -760,7 +1013,8 @@
     "space": "O(n)",
     "className": "LC297_SerializeDeserializeBinaryTree_Hard_Tree",
     "packagePath": "com.leetcode.hard.tree",
-    "filePath": "hard/tree/LC297_SerializeDeserializeBinaryTree_Hard_Tree.java"
+    "filePath": "hard/tree/LC297_SerializeDeserializeBinaryTree_Hard_Tree.java",
+    "javaCode": "package com.leetcode.hard.tree;\n\nimport java.util.Arrays;\nimport java.util.LinkedList;\nimport java.util.Queue;\n\npublic class LC297_SerializeDeserializeBinaryTree_Hard_Tree {\n\n    public static class TreeNode {\n        int val;\n        TreeNode left, right;\n        TreeNode(int val) { this.val = val; }\n    }\n\n    public static String serialize(TreeNode root) {\n        if (root == null) return \"\";\n        StringBuilder sb = new StringBuilder();\n        Queue<TreeNode> q = new LinkedList<>();\n        q.offer(root);\n        while (!q.isEmpty()) {\n            TreeNode node = q.poll();\n            if (node == null) sb.append(\"null,\");\n            else {\n                sb.append(node.val).append(\",\");\n                q.offer(node.left);\n                q.offer(node.right);\n            }\n        }\n        return sb.toString();\n    }\n\n    public static TreeNode deserialize(String data) {\n        if (data.isEmpty()) return null;\n        Queue<String> vals = new LinkedList<>(Arrays.asList(data.split(\",\")));\n        Queue<TreeNode> q = new LinkedList<>();\n        TreeNode root = new TreeNode(Integer.parseInt(vals.poll()));\n        q.offer(root);\n        while (!q.isEmpty()) {\n            TreeNode node = q.poll();\n            String left = vals.poll();\n            String right = vals.poll();\n            if (!\"null\".equals(left)) {\n                node.left = new TreeNode(Integer.parseInt(left));\n                q.offer(node.left);\n            }\n            if (!\"null\".equals(right)) {\n                node.right = new TreeNode(Integer.parseInt(right));\n                q.offer(node.right);\n            }\n        }\n        return root;\n    }\n\n    public static void main(String[] args) {\n        TreeNode root = new TreeNode(1);\n        root.left = new TreeNode(2);\n        root.right = new TreeNode(3);\n        root.right.left = new TreeNode(4);\n        root.right.right = new TreeNode(5);\n        String s = serialize(root);\n        System.out.println(s);\n        TreeNode restored = deserialize(s);\n        System.out.println(restored.val + \" \" + restored.left.val + \" \" + restored.right.val);\n    }\n}"
   },
   {
     "title": "Longest Increasing Subsequence",
@@ -780,7 +1034,8 @@
     "space": "O(n)",
     "className": "LC300_LongestIncreasingSubsequence_Medium_DP",
     "packagePath": "com.leetcode.medium.dynamicprogramming",
-    "filePath": "medium/dynamicprogramming/LC300_LongestIncreasingSubsequence_Medium_DP.java"
+    "filePath": "medium/dynamicprogramming/LC300_LongestIncreasingSubsequence_Medium_DP.java",
+    "javaCode": "package com.leetcode.medium.dynamicprogramming;\n\nimport java.util.Arrays;\n\npublic class LC300_LongestIncreasingSubsequence_Medium_DP {\n\n    public static int lengthOfLIS(int[] nums) {\n        if (nums.length == 0) return 0;\n        int[] dp = new int[nums.length];\n        Arrays.fill(dp, 1);\n        int max = 1;\n        for (int i = 1; i < nums.length; i++) {\n            for (int j = 0; j < i; j++) {\n                if (nums[j] < nums[i]) dp[i] = Math.max(dp[i], dp[j] + 1);\n            }\n            max = Math.max(max, dp[i]);\n        }\n        return max;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(lengthOfLIS(new int[]{10, 9, 2, 5, 3, 7, 101, 18})); // 4\n        System.out.println(lengthOfLIS(new int[]{0, 1, 0, 3, 2, 3}));          // 4\n    }\n}"
   },
   {
     "title": "Coin Change",
@@ -799,7 +1054,8 @@
     "space": "O(amount)",
     "className": "LC322_CoinChange_Medium_DP",
     "packagePath": "com.leetcode.medium.dynamicprogramming",
-    "filePath": "medium/dynamicprogramming/LC322_CoinChange_Medium_DP.java"
+    "filePath": "medium/dynamicprogramming/LC322_CoinChange_Medium_DP.java",
+    "javaCode": "package com.leetcode.medium.dynamicprogramming;\n\nimport java.util.Arrays;\n\npublic class LC322_CoinChange_Medium_DP {\n\n    public static int coinChange(int[] coins, int amount) {\n        int[] dp = new int[amount + 1];\n        Arrays.fill(dp, amount + 1);\n        dp[0] = 0;\n        for (int i = 1; i <= amount; i++) {\n            for (int c : coins) {\n                if (i >= c) dp[i] = Math.min(dp[i], 1 + dp[i - c]);\n            }\n        }\n        return dp[amount] > amount ? -1 : dp[amount];\n    }\n\n    public static void main(String[] args) {\n        System.out.println(coinChange(new int[]{1, 2, 5}, 11));   // 3\n        System.out.println(coinChange(new int[]{2}, 3));           // -1\n    }\n}"
   },
   {
     "title": "Reverse String",
@@ -819,7 +1075,8 @@
     "space": "O(1)",
     "className": "LC344_ReverseString_Easy_String",
     "packagePath": "com.leetcode.easy.string",
-    "filePath": "easy/string/LC344_ReverseString_Easy_String.java"
+    "filePath": "easy/string/LC344_ReverseString_Easy_String.java",
+    "javaCode": "package com.leetcode.easy.string;\n\npublic class LC344_ReverseString_Easy_String {\n\n    public static void reverseString(char[] s) {\n        int left = 0, right = s.length - 1;\n        while (left < right) {\n            char t = s[left];\n            s[left] = s[right];\n            s[right] = t;\n            left++;\n            right--;\n        }\n    }\n\n    public static void main(String[] args) {\n        char[] s = \"hello\".toCharArray();\n        reverseString(s);\n        System.out.println(new String(s)); // olleh\n    }\n}"
   },
   {
     "title": "Top K Frequent Elements",
@@ -839,7 +1096,8 @@
     "space": "O(n)",
     "className": "LC347_TopKFrequentElements_Medium_Heap",
     "packagePath": "com.leetcode.medium.heap",
-    "filePath": "medium/heap/LC347_TopKFrequentElements_Medium_Heap.java"
+    "filePath": "medium/heap/LC347_TopKFrequentElements_Medium_Heap.java",
+    "javaCode": "package com.leetcode.medium.heap;\n\nimport java.util.*;\n\npublic class LC347_TopKFrequentElements_Medium_Heap {\n\n    public static int[] topKFrequent(int[] nums, int k) {\n        Map<Integer, Integer> count = new HashMap<>();\n        for (int n : nums) count.merge(n, 1, Integer::sum);\n        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));\n        for (Map.Entry<Integer, Integer> e : count.entrySet()) {\n            pq.offer(new int[]{e.getKey(), e.getValue()});\n            if (pq.size() > k) pq.poll();\n        }\n        int[] result = new int[k];\n        for (int i = 0; i < k; i++) result[i] = pq.poll()[0];\n        return result;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(Arrays.toString(topKFrequent(new int[]{1, 1, 1, 2, 2, 3}, 2)));\n\n    }\n}"
   },
   {
     "title": "Binary Search",
@@ -858,6 +1116,7 @@
     "space": "O(1)",
     "className": "LC704_BinarySearch_Easy_BinarySearch",
     "packagePath": "com.leetcode.easy.binarysearch",
-    "filePath": "easy/binarysearch/LC704_BinarySearch_Easy_BinarySearch.java"
+    "filePath": "easy/binarysearch/LC704_BinarySearch_Easy_BinarySearch.java",
+    "javaCode": "package com.leetcode.easy.binarysearch;\n\npublic class LC704_BinarySearch_Easy_BinarySearch {\n\n    public static int search(int[] nums, int target) {\n        int left = 0, right = nums.length - 1;\n        while (left <= right) {\n            int mid = left + (right - left) / 2;\n            if (nums[mid] == target) return mid;\n            if (nums[mid] < target) left = mid + 1;\n            else right = mid - 1;\n        }\n        return -1;\n    }\n\n    public static void main(String[] args) {\n        int[] nums = {-1, 0, 3, 5, 9, 12};\n        System.out.println(search(nums, 9));  // 4\n        System.out.println(search(nums, 2)); // -1\n    }\n}"
   }
 ]
