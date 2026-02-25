@@ -39,8 +39,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6129322637422500" crossorigin="anonymous"></script>
+  <!-- AdSense loads only after consent (GDPR/EEA) -->
   <style>
     .prose-pre { white-space: pre-wrap; word-break: break-word; }
     .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
@@ -55,9 +54,22 @@
     .card { transition: transform 0.2s, box-shadow 0.2s; }
     .card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.25); }
     .dark .card:hover { box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.4); }
+    #consent-banner { transition: transform 0.3s ease, opacity 0.3s ease; }
   </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen font-sans antialiased transition-colors duration-200">
+  <!-- Consent Banner (EEA/UK/CH - GDPR) -->
+  <div id="consent-banner" class="fixed bottom-0 left-0 right-0 z-[200] p-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg hidden">
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <p class="text-sm text-gray-600 dark:text-gray-300">
+        We use cookies and similar technologies to show ads and improve your experience. By clicking "Accept", you consent to personalized ads. <a href="#" id="consent-manage" class="text-indigo-600 dark:text-indigo-400 underline">Manage options</a>
+      </p>
+      <div class="flex gap-2 flex-shrink-0">
+        <button id="consent-decline" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 text-sm font-medium">Do not consent</button>
+        <button id="consent-accept" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium">Consent</button>
+      </div>
+    </div>
+  </div>
   <div id="app" class="min-h-screen">
     <!-- Header -->
     <header class="sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl">
@@ -204,6 +216,36 @@
   <script>
     let problems = [];
     let types = new Set();
+
+    // Consent & AdSense (GDPR/EEA)
+    const CONSENT_KEY = 'algos_consent';
+    function loadAdSense() {
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6129322637422500';
+      s.crossOrigin = 'anonymous';
+      document.head.appendChild(s);
+    }
+    function setConsent(value) {
+      localStorage.setItem(CONSENT_KEY, value);
+      const banner = document.getElementById('consent-banner');
+      if (banner) banner.classList.add('hidden');
+      if (value === 'accept') loadAdSense();
+    }
+    (function initConsent() {
+      const consent = localStorage.getItem(CONSENT_KEY);
+      const banner = document.getElementById('consent-banner');
+      if (consent === 'accept') loadAdSense();
+      else if (consent === 'decline') { /* no ads */ }
+      else if (banner) banner.classList.remove('hidden');
+      document.getElementById('consent-accept')?.addEventListener('click', () => setConsent('accept'));
+      document.getElementById('consent-decline')?.addEventListener('click', () => setConsent('decline'));
+      document.getElementById('consent-manage')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem(CONSENT_KEY);
+        if (banner) banner.classList.remove('hidden');
+      });
+    })();
 
     // Theme
     const themeToggle = document.getElementById('theme-toggle');
