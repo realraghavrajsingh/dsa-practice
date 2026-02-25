@@ -1,0 +1,863 @@
+[
+  {
+    "title": "Two Sum",
+    "number": "LC001",
+    "difficulty": "Easy",
+    "type": "Array, Hash Map",
+    "tags": [
+      "array",
+      "hashmap",
+      "faang"
+    ],
+    "statement": "* Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution , and you may not use the same element twice. You can return the answer in any order. *",
+    "constraints": "* 2 \u2264 nums.length \u2264 10\u2074 -10\u2079 \u2264 nums[i] \u2264 10\u2079 -10\u2079 \u2264 target \u2264 10\u2079 Only one valid answer exists. *",
+    "examples": "Example 1:\nInput:  nums = [2, 7, 11, 15], target = 9\nOutput: [0, 1]\nExplanation: nums[0] + nums[1] = 2 + 7 = 9, so we return [0, 1].\nExample 2:\nInput:  nums = [3, 2, 4], target = 6\nOutput: [1, 2]\nExplanation: nums[1] + nums[2] = 2 + 4 = 6.\nExample 3:\nInput:  nums = [3, 3], target = 6\nOutput: [0, 1]",
+    "approach": "One-pass HashMap. Store complement (target - num) as we iterate.",
+    "time": "O(n)",
+    "space": "O(n)",
+    "className": "LC001_TwoSum_Easy_Array",
+    "packagePath": "com.leetcode.easy.array",
+    "filePath": "easy/array/LC001_TwoSum_Easy_Array.java"
+  },
+  {
+    "title": "Longest Substring Without Repeating Characters",
+    "number": "LC003",
+    "difficulty": "Medium",
+    "type": "Sliding Window, Hash Map",
+    "tags": [
+      "slidingwindow",
+      "hashmap",
+      "faang"
+    ],
+    "statement": "* Given a string s, find the length of the longest substring without repeating characters. *",
+    "constraints": "* 0 \u2264 s.length \u2264 5 \u00d7 10\u2074 s consists of English letters, digits, symbols and spaces. *",
+    "examples": "Example 1:\nInput:  s = \"abcabcbb\"\nOutput: 3\nExplanation: The answer is \"abc\", with length 3.\nExample 2:\nInput:  s = \"bbbbb\"\nOutput: 1\nExplanation: The answer is \"b\", with length 1.\nExample 3:\nInput:  s = \"pwwkew\"\nOutput: 3\nExplanation: The answer is \"wke\" or \"kew\", length 3.",
+    "approach": "Sliding window with char->index map.",
+    "time": "O(n)",
+    "space": "O(min(n, charset))",
+    "className": "LC003_LongestSubstring_Medium_SlidingWindow",
+    "packagePath": "com.leetcode.medium.slidingwindow",
+    "filePath": "medium/slidingwindow/LC003_LongestSubstring_Medium_SlidingWindow.java"
+  },
+  {
+    "title": "Regular Expression Matching",
+    "number": "LC010",
+    "difficulty": "Hard",
+    "type": "Dynamic Programming, String",
+    "tags": [
+      "dp",
+      "string",
+      "faang"
+    ],
+    "statement": "* Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where: '.' Matches any single character. '*' Matches zero or more of the preceding element. The matching should cover the entire input string (not partial). *",
+    "constraints": "* 1 \u2264 s.length \u2264 20 1 \u2264 p.length \u2264 20 s contains only lowercase English letters. p contains only lowercase English letters, '.', and '*'. It is guaranteed for each appearance of '*', there will be a previous valid character to match. *",
+    "examples": "Example 1:\nInput:  s = \"aa\", p = \"a\"\nOutput: false\nExplanation: \"a\" does not match entire string \"aa\".\nExample 2:\nInput:  s = \"aa\", p = \"a*\"\nOutput: true\nExplanation: '*' means zero or more of preceding element 'a'. \"aa\" matches.\nExample 3:\nInput:  s = \"ab\", p = \".*\"\nOutput: true\nExplanation: \".*\" means \"zero or more (*) of any character (.)\".",
+    "approach": "DP - dp[i][j] = match s[0..i) with p[0..j).",
+    "time": "O(m*n)",
+    "space": "O(m*n)",
+    "className": "LC010_RegularExpressionMatching_Hard_DP",
+    "packagePath": "com.leetcode.hard.dynamicprogramming",
+    "filePath": "hard/dynamicprogramming/LC010_RegularExpressionMatching_Hard_DP.java"
+  },
+  {
+    "title": "Container With Most Water",
+    "number": "LC011",
+    "difficulty": "Medium",
+    "type": "Two Pointers, Array",
+    "tags": [
+      "twopointers",
+      "array",
+      "faang"
+    ],
+    "statement": "* You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the i-th line are (i, 0) and (i, height[i]). Find two lines that together with the x-axis form a container that holds the most water. Return the maximum amount of water a container can store. Notice that you may not slant the container. *",
+    "constraints": "* n == height.length 2 \u2264 n \u2264 10\u2075 0 \u2264 height[i] \u2264 10\u2074 *",
+    "examples": "Example 1:\nInput:  height = [1, 8, 6, 2, 5, 4, 8, 3, 7]\nOutput: 49\nExplanation: Lines at index 1 and 8: height=8, width=7, area=49.\nExample 2:\nInput:  height = [1, 1]\nOutput: 1",
+    "approach": "Two pointers at ends; move the shorter inward.",
+    "time": "O(n)",
+    "space": "O(1)",
+    "className": "LC011_ContainerWithMostWater_Medium_TwoPointers",
+    "packagePath": "com.leetcode.medium.twopointers",
+    "filePath": "medium/twopointers/LC011_ContainerWithMostWater_Medium_TwoPointers.java"
+  },
+  {
+    "title": "3Sum",
+    "number": "LC015",
+    "difficulty": "Medium",
+    "type": "Array, Two Pointers",
+    "tags": [
+      "array",
+      "twopointers",
+      "faang"
+    ],
+    "statement": "* Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, j != k, and nums[i] + nums[j] + nums[k] == 0. Notice that the solution set must not contain duplicate triplets. *",
+    "constraints": "* 3 \u2264 nums.length \u2264 3000 -10\u2075 \u2264 nums[i] \u2264 10\u2075 *",
+    "examples": "Example 1:\nInput:  nums = [-1, 0, 1, 2, -1, -4]\nOutput: [[-1, -1, 2], [-1, 0, 1]]\nExplanation: nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.\nnums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.\nnums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.\nExample 2:\nInput:  nums = [0, 1, 1]\nOutput: []\nExample 3:\nInput:  nums = [0, 0, 0]\nOutput: [[0, 0, 0]]",
+    "approach": "Sort + two pointers for each fixed first element.",
+    "time": "O(n\u00b2)",
+    "space": "O(1) excluding output",
+    "className": "LC015_ThreeSum_Medium_Array",
+    "packagePath": "com.leetcode.medium.array",
+    "filePath": "medium/array/LC015_ThreeSum_Medium_Array.java"
+  },
+  {
+    "title": "3Sum Closest",
+    "number": "LC016",
+    "difficulty": "Medium",
+    "type": "Two Pointers, Array",
+    "tags": [
+      "twopointers",
+      "array",
+      "faang"
+    ],
+    "statement": "* Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution. *",
+    "constraints": "* 3 \u2264 nums.length \u2264 500 -1000 \u2264 nums[i] \u2264 1000 -10\u2074 \u2264 target \u2264 10\u2074 *",
+    "examples": "Example 1:\nInput:  nums = [-1, 2, 1, -4], target = 1\nOutput: 2\nExplanation: The sum that is closest to target is 2. (-1 + 2 + 1 = 2).\nExample 2:\nInput:  nums = [0, 0, 0], target = 1\nOutput: 0",
+    "approach": "Sort + two pointers.",
+    "time": "O(n\u00b2)",
+    "space": "O(1)",
+    "className": "LC016_ThreeSumClosest_Medium_TwoPointers",
+    "packagePath": "com.leetcode.medium.twopointers",
+    "filePath": "medium/twopointers/LC016_ThreeSumClosest_Medium_TwoPointers.java"
+  },
+  {
+    "title": "Valid Parentheses",
+    "number": "LC020",
+    "difficulty": "Easy",
+    "type": "Stack, String",
+    "tags": [
+      "stack",
+      "faang"
+    ],
+    "statement": "* Given a string s containing just the characters '(', ')', '{', '', '[' and ']', determine if the input string is valid. An input string is valid if: (1) Open brackets must be closed by the same type of brackets. (2) Open brackets must be closed in the correct order. (3) Every close bracket has a corresponding open bracket of the same type. *",
+    "constraints": "* 1 \u2264 s.length \u2264 10\u2074 s consists of parentheses only '()[]{'. *",
+    "examples": "Example 1:\nInput:  s = \"()\"\nOutput: true\nExample 2:\nInput:  s = \"()[]{}\"\nOutput: true\nExample 3:\nInput:  s = \"(]\"\nOutput: false\nExplanation: ')' and ']' don't match.\nExample 4:\nInput:  s = \"([)]\"\nOutput: false\nExplanation: Wrong nesting order.",
+    "approach": "Stack to match opening brackets.",
+    "time": "O(n)",
+    "space": "O(n)",
+    "className": "LC020_ValidParentheses_Easy_Stack",
+    "packagePath": "com.leetcode.easy.stack",
+    "filePath": "easy/stack/LC020_ValidParentheses_Easy_Stack.java"
+  },
+  {
+    "title": "Merge Two Sorted Lists",
+    "number": "LC021",
+    "difficulty": "Easy",
+    "type": "Linked List",
+    "tags": [
+      "linkedlist",
+      "faang"
+    ],
+    "statement": "* You are given the heads of two sorted linked lists list1 and list2. Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists. Return the head of the merged linked list. *",
+    "constraints": "* The number of nodes in both lists is in the range [0, 50]. -100 \u2264 Node.val \u2264 100 Both list1 and list2 are sorted in non-decreasing order. *",
+    "examples": "Example 1:\nInput:  list1 = [1,2,4], list2 = [1,3,4]\nOutput: [1,1,2,3,4,4]\nExplanation: Merged sorted list.\nExample 2:\nInput:  list1 = [], list2 = []\nOutput: []\nExample 3:\nInput:  list1 = [], list2 = [0]\nOutput: [0]",
+    "approach": "Dummy node, compare and link.",
+    "time": "O(m+n)",
+    "space": "O(1)",
+    "className": "LC021_MergeTwoSortedLists_Easy_LinkedList",
+    "packagePath": "com.leetcode.easy.linkedlist",
+    "filePath": "easy/linkedlist/LC021_MergeTwoSortedLists_Easy_LinkedList.java"
+  },
+  {
+    "title": "Search in Rotated Sorted Array",
+    "number": "LC033",
+    "difficulty": "Medium",
+    "type": "Binary Search",
+    "tags": [
+      "binarysearch",
+      "faang"
+    ],
+    "statement": "* There is an integer array nums sorted in ascending order (with distinct values). Prior to being passed to your function, nums is possibly rotated at an unknown pivot index k (1 \u2264 k Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not. You must write an algorithm with O(log n) runtime complexity. *",
+    "constraints": "* 1 \u2264 nums.length \u2264 5000 -10\u2074 \u2264 nums[i] \u2264 10\u2074 All values of nums are unique. nums is an ascending array that is possibly rotated. -10\u2074 \u2264 target \u2264 10\u2074 *",
+    "examples": "Example 1:\nInput:  nums = [4, 5, 6, 7, 0, 1, 2], target = 0\nOutput: 4\nExplanation: 0 is at index 4.\nExample 2:\nInput:  nums = [4, 5, 6, 7, 0, 1, 2], target = 3\nOutput: -1\nExample 3:\nInput:  nums = [1], target = 0\nOutput: -1",
+    "approach": "Binary search; one half is always sorted.",
+    "time": "O(log n)",
+    "space": "O(1)",
+    "className": "LC033_SearchRotatedArray_Medium_BinarySearch",
+    "packagePath": "com.leetcode.medium.binarysearch",
+    "filePath": "medium/binarysearch/LC033_SearchRotatedArray_Medium_BinarySearch.java"
+  },
+  {
+    "title": "Find First and Last Position of Element in Sorted Array",
+    "number": "LC034",
+    "difficulty": "Medium",
+    "type": "Binary Search",
+    "tags": [
+      "binarysearch",
+      "faang"
+    ],
+    "statement": "* Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value. If target is not found in the array, return [-1, -1]. You must write an algorithm with O(log n) runtime complexity. *",
+    "constraints": "* 0 \u2264 nums.length \u2264 10\u2075 -10\u2079 \u2264 nums[i] \u2264 10\u2079 nums is a non-decreasing array. -10\u2079 \u2264 target \u2264 10\u2079 *",
+    "examples": "Example 1:\nInput:  nums = [5, 7, 7, 8, 8, 10], target = 8\nOutput: [3, 4]\nExplanation: 8 appears at indices 3 and 4.\nExample 2:\nInput:  nums = [5, 7, 7, 8, 8, 10], target = 6\nOutput: [-1, -1]\nExample 3:\nInput:  nums = [], target = 0\nOutput: [-1, -1]",
+    "approach": "Two binary searches - one for left bound, one for right.",
+    "time": "O(log n)",
+    "space": "O(1)",
+    "className": "LC034_FindFirstLastPosition_Medium_BinarySearch",
+    "packagePath": "com.leetcode.medium.binarysearch",
+    "filePath": "medium/binarysearch/LC034_FindFirstLastPosition_Medium_BinarySearch.java"
+  },
+  {
+    "title": "Search Insert Position",
+    "number": "LC035",
+    "difficulty": "Easy",
+    "type": "Binary Search",
+    "tags": [
+      "binarysearch",
+      "faang"
+    ],
+    "statement": "* Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order. You must write an algorithm with O(log n) runtime complexity. *",
+    "constraints": "* 1 \u2264 nums.length \u2264 10\u2074 -10\u2074 \u2264 nums[i], target \u2264 10\u2074 nums contains distinct values sorted in ascending order. *",
+    "examples": "Example 1:\nInput:  nums = [1, 3, 5, 6], target = 5\nOutput: 2\nExplanation: 5 is found at index 2.\nExample 2:\nInput:  nums = [1, 3, 5, 6], target = 2\nOutput: 1\nExplanation: 2 is not found. It would be inserted at index 1 (between 1 and 3).\nExample 3:\nInput:  nums = [1, 3, 5, 6], target = 7\nOutput: 4\nExplanation: 7 is not found. It would be inserted at index 4 (at the end).",
+    "approach": "Binary search; return left when not found.",
+    "time": "O(log n)",
+    "space": "O(1)",
+    "className": "LC035_SearchInsertPosition_Easy_BinarySearch",
+    "packagePath": "com.leetcode.easy.binarysearch",
+    "filePath": "easy/binarysearch/LC035_SearchInsertPosition_Easy_BinarySearch.java"
+  },
+  {
+    "title": "Combination Sum",
+    "number": "LC039",
+    "difficulty": "Medium",
+    "type": "Backtracking",
+    "tags": [
+      "backtracking",
+      "faang"
+    ],
+    "statement": "* Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order. The same number may be chosen from candidates an unlimited number of times . Two combinations are unique if the frequency of at least one of the chosen numbers is different. *",
+    "constraints": "* 1 \u2264 candidates.length \u2264 30 2 \u2264 candidates[i] \u2264 40 All elements of candidates are distinct. 1 \u2264 target \u2264 40 *",
+    "examples": "Example 1:\nInput:  candidates = [2, 3, 6, 7], target = 7\nOutput: [[2, 2, 3], [7]]\nExplanation: 2+2+3=7, 7=7\nExample 2:\nInput:  candidates = [2, 3, 5], target = 8\nOutput: [[2, 2, 2, 2], [2, 3, 3], [3, 5]]\nExample 3:\nInput:  candidates = [2], target = 1\nOutput: []",
+    "approach": "Backtrack with start index to avoid duplicates.",
+    "time": "O(2^target)",
+    "space": "O(target)",
+    "className": "LC039_CombinationSum_Medium_Backtracking",
+    "packagePath": "com.leetcode.medium.backtracking",
+    "filePath": "medium/backtracking/LC039_CombinationSum_Medium_Backtracking.java"
+  },
+  {
+    "title": "First Missing Positive",
+    "number": "LC041",
+    "difficulty": "Hard",
+    "type": "Array, Cyclic Sort",
+    "tags": [
+      "array",
+      "faang"
+    ],
+    "statement": "* Given an unsorted integer array nums, return the smallest positive integer that is not present in nums. You must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space. *",
+    "constraints": "* 1 \u2264 nums.length \u2264 10\u2075 -2\u00b3\u00b9 \u2264 nums[i] \u2264 2\u00b3\u00b9 - 1 *",
+    "examples": "Example 1:\nInput:  nums = [1, 2, 0]\nOutput: 3\nExplanation: 1 and 2 are present. Smallest missing positive = 3.\nExample 2:\nInput:  nums = [3, 4, -1, 1]\nOutput: 2\nExplanation: 1, 3, 4 present. Missing = 2.\nExample 3:\nInput:  nums = [7, 8, 9, 11, 12]\nOutput: 1\nExplanation: All positives > 1. Smallest missing = 1.",
+    "approach": "Place each positive in its correct index (1 at 0, 2 at 1, ...).",
+    "time": "O(n)",
+    "space": "O(1)",
+    "className": "LC041_FirstMissingPositive_Hard_Array",
+    "packagePath": "com.leetcode.hard.array",
+    "filePath": "hard/array/LC041_FirstMissingPositive_Hard_Array.java"
+  },
+  {
+    "title": "Trapping Rain Water",
+    "number": "LC042",
+    "difficulty": "Hard",
+    "type": "Array, Two Pointers",
+    "tags": [
+      "array",
+      "twopointers",
+      "faang"
+    ],
+    "statement": "* Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining. Each bar has width 1 and height given by the array. *",
+    "constraints": "* n == height.length 1 \u2264 n \u2264 2 \u00d7 10\u2075 0 \u2264 height[i] \u2264 10\u2075 *",
+    "examples": "Example 1:\nInput:  height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]\nOutput: 6\nExplanation: The elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1].\nIn this case, 6 units of rain water are being trapped.\nExample 2:\nInput:  height = [4, 2, 0, 3, 2, 5]\nOutput: 9",
+    "approach": "Two pointers; track maxLeft and maxRight.",
+    "time": "O(n)",
+    "space": "O(1)",
+    "className": "LC042_TrappingRainWater_Hard_Array",
+    "packagePath": "com.leetcode.hard.array",
+    "filePath": "hard/array/LC042_TrappingRainWater_Hard_Array.java"
+  },
+  {
+    "title": "Permutations",
+    "number": "LC046",
+    "difficulty": "Medium",
+    "type": "Backtracking",
+    "tags": [
+      "backtracking",
+      "faang"
+    ],
+    "statement": "* Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order. *",
+    "constraints": "* 1 \u2264 nums.length \u2264 6 -10 \u2264 nums[i] \u2264 10 All integers of nums are unique. *",
+    "examples": "Example 1:\nInput:  nums = [1, 2, 3]\nOutput: [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]]\nExample 2:\nInput:  nums = [0, 1]\nOutput: [[0,1], [1,0]]\nExample 3:\nInput:  nums = [1]\nOutput: [[1]]",
+    "approach": "Backtrack with swap.",
+    "time": "O(n! * n)",
+    "space": "O(n)",
+    "className": "LC046_Permutations_Medium_Backtracking",
+    "packagePath": "com.leetcode.medium.backtracking",
+    "filePath": "medium/backtracking/LC046_Permutations_Medium_Backtracking.java"
+  },
+  {
+    "title": "Maximum Subarray (Kadane's Algorithm)",
+    "number": "LC053",
+    "difficulty": "Easy",
+    "type": "Array, Dynamic Programming",
+    "tags": [
+      "array",
+      "dp",
+      "faang"
+    ],
+    "statement": "* Given an integer array nums, find the subarray with the largest sum, and return its sum. A subarray is a contiguous part of an array. *",
+    "constraints": "* 1 \u2264 nums.length \u2264 10\u2075 -10\u2074 \u2264 nums[i] \u2264 10\u2074 *",
+    "examples": "Example 1:\nInput:  nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\nOutput: 6\nExplanation: The subarray [4, -1, 2, 1] has the largest sum 6.\nExample 2:\nInput:  nums = [1]\nOutput: 1\nExplanation: The subarray [1] has the largest sum 1.\nExample 3:\nInput:  nums = [5, 4, -1, 7, 8]\nOutput: 23\nExplanation: The subarray [5, 4, -1, 7, 8] has the largest sum 23.",
+    "approach": "Kadane's - track current sum, reset if negative.",
+    "time": "O(n)",
+    "space": "O(1)",
+    "className": "LC053_MaxSubarray_Easy_Array",
+    "packagePath": "com.leetcode.easy.array",
+    "filePath": "easy/array/LC053_MaxSubarray_Easy_Array.java"
+  },
+  {
+    "title": "Climbing Stairs",
+    "number": "LC070",
+    "difficulty": "Easy",
+    "type": "Dynamic Programming",
+    "tags": [
+      "dp",
+      "faang"
+    ],
+    "statement": "* You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top? *",
+    "constraints": "* 1 \u2264 n \u2264 45 *",
+    "examples": "Example 1:\nInput:  n = 2\nOutput: 2\nExplanation: There are two ways to climb to the top.\n- 1 step + 1 step\n- 2 steps\nExample 2:\nInput:  n = 3\nOutput: 3\nExplanation: There are three ways to climb to the top.\n- 1 step + 1 step + 1 step\n- 1 step + 2 steps\n- 2 steps + 1 step",
+    "approach": "Fibonacci-like DP. dp[i] = dp[i-1] + dp[i-2].",
+    "time": "O(n)",
+    "space": "O(1)",
+    "className": "LC070_ClimbingStairs_Easy_DP",
+    "packagePath": "com.leetcode.easy.dynamicprogramming",
+    "filePath": "easy/dynamicprogramming/LC070_ClimbingStairs_Easy_DP.java"
+  },
+  {
+    "title": "Edit Distance (Levenshtein)",
+    "number": "LC072",
+    "difficulty": "Hard",
+    "type": "Dynamic Programming",
+    "tags": [
+      "dp",
+      "string",
+      "faang"
+    ],
+    "statement": "* Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2. You have the following three operations permitted on a word: Insert a character, Delete a character, Replace a character. *",
+    "constraints": "* 0 \u2264 word1.length, word2.length \u2264 500 word1 and word2 consist of lowercase English letters. *",
+    "examples": "Example 1:\nInput:  word1 = \"horse\", word2 = \"ros\"\nOutput: 3\nExplanation: horse \u2192 rorse (replace h\u2192r), rorse \u2192 rose (remove r), rose \u2192 ros (remove e).\nExample 2:\nInput:  word1 = \"intention\", word2 = \"execution\"\nOutput: 5\nExplanation: intention \u2192 inention (remove t), inention \u2192 enention (replace i\u2192e),\nenention \u2192 exention (replace n\u2192x), exention \u2192 exection (replace n\u2192c),\nexection \u2192 execution (insert u).",
+    "approach": "dp[i][j] = min edits for word1[0..i) to word2[0..j).",
+    "time": "O(m*n)",
+    "space": "O(m*n)",
+    "className": "LC072_EditDistance_Hard_DP",
+    "packagePath": "com.leetcode.hard.dynamicprogramming",
+    "filePath": "hard/dynamicprogramming/LC072_EditDistance_Hard_DP.java"
+  },
+  {
+    "title": "Validate Binary Search Tree",
+    "number": "LC098",
+    "difficulty": "Medium",
+    "type": "Tree, DFS",
+    "tags": [
+      "tree",
+      "dfs",
+      "faang"
+    ],
+    "statement": "* Given the root of a binary tree, determine if it is a valid binary search tree (BST). A valid BST is defined as follows: (1) The left subtree of a node contains only nodes with keys less than the node's key. (2) The right subtree of a node contains only nodes with keys greater than the node's key. (3) Both the left and right subtrees must also be binary search trees. *",
+    "constraints": "* The number of nodes in the tree is in the range [1, 10\u2074]. -2\u00b3\u00b9 \u2264 Node.val \u2264 2\u00b3\u00b9 - 1 *",
+    "examples": "Example 1:\nInput:  root = [2, 1, 3]\n2\n/ \\\n1   3\nOutput: true\nExample 2:\nInput:  root = [5, 1, 4, null, null, 3, 6]\n5\n/ \\\n1   4\n/ \\\n3   6\nOutput: false\nExplanation: Root 5's right child 4 has left child 3 < 5. Invalid BST.",
+    "approach": "DFS with min/max bounds.",
+    "time": "O(n)",
+    "space": "O(h)",
+    "className": "LC098_ValidateBST_Medium_Tree",
+    "packagePath": "com.leetcode.medium.tree",
+    "filePath": "medium/tree/LC098_ValidateBST_Medium_Tree.java"
+  },
+  {
+    "title": "Binary Tree Level Order Traversal",
+    "number": "LC102",
+    "difficulty": "Medium",
+    "type": "Tree, BFS",
+    "tags": [
+      "tree",
+      "bfs",
+      "faang"
+    ],
+    "statement": "* Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level). *",
+    "constraints": "* The number of nodes in the tree is in the range [0, 2000]. -1000 \u2264 Node.val \u2264 1000 *",
+    "examples": "Example 1:\nInput:  root = [3, 9, 20, null, null, 15, 7]\n3\n/ \\\n9  20\n/  \\\n15   7\nOutput: [[3], [9, 20], [15, 7]]\nExample 2:\nInput:  root = [1]\nOutput: [[1]]\nExample 3:\nInput:  root = []\nOutput: []",
+    "approach": "BFS with queue.",
+    "time": "O(n)",
+    "space": "O(n)",
+    "className": "LC102_BinaryTreeLevelOrder_Medium_Tree",
+    "packagePath": "com.leetcode.medium.tree",
+    "filePath": "medium/tree/LC102_BinaryTreeLevelOrder_Medium_Tree.java"
+  },
+  {
+    "title": "Maximum Depth of Binary Tree",
+    "number": "LC104",
+    "difficulty": "Easy",
+    "type": "Tree, DFS",
+    "tags": [
+      "tree",
+      "dfs",
+      "faang"
+    ],
+    "statement": "* Given the root of a binary tree, return its maximum depth. A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node. *",
+    "constraints": "* The number of nodes in the tree is in the range [0, 10\u2074]. -100 \u2264 Node.val \u2264 100 *",
+    "examples": "Example 1:\nInput:  root = [3,9,20,null,null,15,7]\n3\n/ \\\n9  20\n/ \\\n15  7\nOutput: 3\nExplanation: Longest path: 3 \u2192 20 \u2192 15 (or 7), depth = 3.\nExample 2:\nInput:  root = [1,null,2]\nOutput: 2",
+    "approach": "Recursive DFS.",
+    "time": "O(n)",
+    "space": "O(h) - recursion stack",
+    "className": "LC104_MaxDepth_Easy_Tree",
+    "packagePath": "com.leetcode.easy.tree",
+    "filePath": "easy/tree/LC104_MaxDepth_Easy_Tree.java"
+  },
+  {
+    "title": "Best Time to Buy and Sell Stock",
+    "number": "LC121",
+    "difficulty": "Easy",
+    "type": "Dynamic Programming, Array",
+    "tags": [
+      "dp",
+      "array",
+      "faang"
+    ],
+    "statement": "* You are given an array prices where prices[i] is the price of a given stock on the i-th day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0. *",
+    "constraints": "* 1 \u2264 prices.length \u2264 10\u2075 0 \u2264 prices[i] \u2264 10\u2074 *",
+    "examples": "Example 1:\nInput:  prices = [7, 1, 5, 3, 6, 4]\nOutput: 5\nExplanation: Buy on day 2 (price=1) and sell on day 5 (price=6), profit = 6-1 = 5.\nExample 2:\nInput:  prices = [7, 6, 4, 3, 1]\nOutput: 0\nExplanation: No transactions are done and the max profit = 0.",
+    "approach": "Track min price seen, max profit = price - min.",
+    "time": "O(n)",
+    "space": "O(1)",
+    "className": "LC121_BestTimeToBuyStock_Easy_DP",
+    "packagePath": "com.leetcode.easy.dynamicprogramming",
+    "filePath": "easy/dynamicprogramming/LC121_BestTimeToBuyStock_Easy_DP.java"
+  },
+  {
+    "title": "Binary Tree Maximum Path Sum",
+    "number": "LC124",
+    "difficulty": "Hard",
+    "type": "Tree, DFS",
+    "tags": [
+      "tree",
+      "dfs",
+      "faang"
+    ],
+    "statement": "* A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root. The path sum of a path is the sum of the node's values in the path. Given the root of a binary tree, return the maximum path sum of any non-empty path. *",
+    "constraints": "* The number of nodes in the tree is in the range [1, 3 \u00d7 10\u2074]. -1000 \u2264 Node.val \u2264 1000 *",
+    "examples": "Example 1:\nInput:  root = [1, 2, 3]\n1\n/ \\\n2   3\nOutput: 6\nExplanation: Optimal path is 2 \u2192 1 \u2192 3 with sum 6.\nExample 2:\nInput:  root = [-10, 9, 20, null, null, 15, 7]\n-10\n/  \\\n9   20\n/  \\\n15   7\nOutput: 42\nExplanation: Optimal path is 15 \u2192 20 \u2192 7 with sum 42.",
+    "approach": "DFS; return max path through node (single branch); track global max.",
+    "time": "O(n)",
+    "space": "O(h)",
+    "className": "LC124_BinaryTreeMaxPathSum_Hard_Tree",
+    "packagePath": "com.leetcode.hard.tree",
+    "filePath": "hard/tree/LC124_BinaryTreeMaxPathSum_Hard_Tree.java"
+  },
+  {
+    "title": "Valid Palindrome",
+    "number": "LC125",
+    "difficulty": "Easy",
+    "type": "Two Pointers, String",
+    "tags": [
+      "twopointers",
+      "string",
+      "faang"
+    ],
+    "statement": "* A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers. Given a string s, return true if it is a palindrome, or false otherwise. *",
+    "constraints": "* 1 \u2264 s.length \u2264 2 \u00d7 10\u2075 s consists only of printable ASCII characters. *",
+    "examples": "Example 1:\nInput:  s = \"A man, a plan, a canal: Panama\"\nOutput: true\nExplanation: \"amanaplanacanalpanama\" is a palindrome.\nExample 2:\nInput:  s = \"race a car\"\nOutput: false\nExplanation: \"raceacar\" is not a palindrome.\nExample 3:\nInput:  s = \" \"\nOutput: true\nExplanation: Empty string after removal is a palindrome.",
+    "approach": "Two pointers from both ends.",
+    "time": "O(n)",
+    "space": "O(1)",
+    "className": "LC125_ValidPalindrome_Easy_TwoPointers",
+    "packagePath": "com.leetcode.easy.twopointers",
+    "filePath": "easy/twopointers/LC125_ValidPalindrome_Easy_TwoPointers.java"
+  },
+  {
+    "title": "Word Ladder",
+    "number": "LC127",
+    "difficulty": "",
+    "type": "Graph, BFS",
+    "tags": [
+      "graph",
+      "bfs",
+      "faang"
+    ],
+    "statement": "* A transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord \u2192 s\u2081 \u2192 s\u2082 \u2192 ... \u2192 s\u2096 such that: Every adjacent pair of words differs by a single letter. Every s\u1d62 for 1 \u2264 i \u2264 k is in wordList. Note that beginWord does not need to be in wordList. s\u2096 == endWord. Given two words, beginWord and endWord, and a dictionary wordList, return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if no such sequence exists. *",
+    "constraints": "* 1 \u2264 beginWord.length \u2264 10 endWord.length == beginWord.length 1 \u2264 wordList.length \u2264 5000 wordList[i].length == beginWord.length beginWord, endWord, and wordList[i] consist of lowercase English letters. beginWord != endWord All words in wordList are unique. *",
+    "examples": "Example 1:\nInput:  beginWord = \"hit\", endWord = \"cog\",\nwordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]\nOutput: 5\nExplanation: hit \u2192 hot \u2192 dot \u2192 dog \u2192 cog (5 words).\nExample 2:\nInput:  beginWord = \"hit\", endWord = \"cog\",\nwordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]\nOutput: 0\nExplanation: endWord \"cog\" is not in wordList, no valid sequence.\nExample 3:\nInput:  beginWord = \"a\", endWord = \"c\", wordList = [\"a\",\"b\",\"c\"]\nOutput: 2\nExplanation: a \u2192 c (2 words).",
+    "approach": "BFS; try changing each char to 'a'-'z'.",
+    "time": "O(M\u00b2 * N) where M=word length, N=wordList size",
+    "space": "O(N)",
+    "className": "LC127_WordLadder_Hard_Graph",
+    "packagePath": "com.leetcode.hard.graph",
+    "filePath": "hard/graph/LC127_WordLadder_Hard_Graph.java"
+  },
+  {
+    "title": "Single Number",
+    "number": "LC136",
+    "difficulty": "Easy",
+    "type": "Bit Manipulation",
+    "tags": [
+      "bitmanipulation",
+      "faang"
+    ],
+    "statement": "* Given a non-empty array of integers nums, every element appears twice except for one. Find that single one. You must implement a solution with a linear runtime complexity and use only constant extra space. *",
+    "constraints": "* 1 \u2264 nums.length \u2264 3 \u00d7 10\u2074 -3 \u00d7 10\u2074 \u2264 nums[i] \u2264 3 \u00d7 10\u2074 Each element in the array appears twice except for one element which appears only once. *",
+    "examples": "Example 1:\nInput:  nums = [2, 2, 1]\nOutput: 1\nExplanation: Only 1 appears once.\nExample 2:\nInput:  nums = [4, 1, 2, 1, 2]\nOutput: 4\nExplanation: Only 4 appears once.\nExample 3:\nInput:  nums = [1]\nOutput: 1",
+    "approach": "XOR all numbers. a ^ a = 0, so pairs cancel; remaining is the answer.",
+    "time": "O(n)",
+    "space": "O(1)",
+    "className": "LC136_SingleNumber_Easy_BitManipulation",
+    "packagePath": "com.leetcode.easy.bitmanipulation",
+    "filePath": "easy/bitmanipulation/LC136_SingleNumber_Easy_BitManipulation.java"
+  },
+  {
+    "title": "Min Stack",
+    "number": "LC155",
+    "difficulty": "Easy",
+    "type": "Stack, Design",
+    "tags": [
+      "stack",
+      "faang"
+    ],
+    "statement": "* Design a stack that supports push, pop, top, and retrieving the minimum element in constant time. Implement the MinStack class: * MinStack() - initializes the stack object void push(int val) - pushes val onto the stack void pop() - removes the element on the top int top() - gets the top element int getMin() - retrieves the minimum element in the stack * You must implement a solution with O(1) time complexity for each function. *",
+    "constraints": "* -2\u00b3\u00b9 \u2264 val \u2264 2\u00b3\u00b9 - 1 pop, top, getMin will be called on non-empty stacks only *",
+    "examples": "Example:\nInput:  [\"MinStack\",\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"top\",\"getMin\"]\n[[],[-2],[0],[-3],[],[],[],[]]\nOutput: [null,null,null,null,-3,null,0,-2]\nExplanation: push(-2), push(0), push(-3) \u2192 getMin()=-3, pop() \u2192 top()=0, getMin()=-2",
+    "approach": "Two stacks - one for values, one for min at each level.",
+    "time": "O(1) all ops",
+    "space": "O(n)",
+    "className": "LC155_MinStack_Easy_Stack",
+    "packagePath": "com.leetcode.easy.stack",
+    "filePath": "easy/stack/LC155_MinStack_Easy_Stack.java"
+  },
+  {
+    "title": "Number of 1 Bits (Hamming Weight)",
+    "number": "LC191",
+    "difficulty": "Easy",
+    "type": "Bit Manipulation",
+    "tags": [
+      "bitmanipulation",
+      "faang"
+    ],
+    "statement": "* Write a function that takes the binary representation of an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight). Note that in some languages, such as Java, there is no unsigned integer type. In this case, the input will be given as a signed integer type. It should not affect your implementation, as the integer's internal binary representation is the same, whether it is signed or unsigned. *",
+    "constraints": "* The input must be a binary string of length 32. *",
+    "examples": "Example 1:\nInput:  n = 11 (binary: 00000000000000000000000000001011)\nOutput: 3\nExplanation: The input has three '1' bits.\nExample 2:\nInput:  n = 128 (binary: 00000000000000000000000010000000)\nOutput: 1\nExample 3:\nInput:  n = 2147483645 (binary: 01111111111111111111111111111101)\nOutput: 31",
+    "approach": "n & (n-1) clears lowest set bit.",
+    "time": "O(k) k=number of 1 bits",
+    "space": "O(1)",
+    "className": "LC191_NumberOfOneBits_Easy_BitManipulation",
+    "packagePath": "com.leetcode.easy.bitmanipulation",
+    "filePath": "easy/bitmanipulation/LC191_NumberOfOneBits_Easy_BitManipulation.java"
+  },
+  {
+    "title": "Number of Islands",
+    "number": "LC200",
+    "difficulty": "Medium",
+    "type": "Graph, DFS/BFS",
+    "tags": [
+      "graph",
+      "dfs",
+      "faang"
+    ],
+    "statement": "* Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are surrounded by water. *",
+    "constraints": "* m == grid.length n == grid[i].length 1 \u2264 m, n \u2264 300 grid[i][j] is '0' or '1'. *",
+    "examples": "Example 1:\nInput:  grid = [[\"1\",\"1\",\"1\",\"1\",\"0\"],\n[\"1\",\"1\",\"0\",\"1\",\"0\"],\n[\"1\",\"1\",\"0\",\"0\",\"0\"],\n[\"0\",\"0\",\"0\",\"0\",\"0\"]]\nOutput: 1\nExample 2:\nInput:  grid = [[\"1\",\"1\",\"0\",\"0\",\"0\"],\n[\"1\",\"1\",\"0\",\"0\",\"0\"],\n[\"0\",\"0\",\"1\",\"0\",\"0\"],\n[\"0\",\"0\",\"0\",\"1\",\"1\"]]\nOutput: 3",
+    "approach": "DFS from each unvisited '1', mark visited.",
+    "time": "O(m*n)",
+    "space": "O(m*n) - recursion",
+    "className": "LC200_NumberOfIslands_Medium_Graph",
+    "packagePath": "com.leetcode.medium.graph",
+    "filePath": "medium/graph/LC200_NumberOfIslands_Medium_Graph.java"
+  },
+  {
+    "title": "Happy Number",
+    "number": "LC202",
+    "difficulty": "Easy",
+    "type": "Hash Map, Math",
+    "tags": [
+      "hashmap",
+      "faang"
+    ],
+    "statement": "* Write an algorithm to determine if a number n is happy. A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits. Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy. *",
+    "constraints": "* 1 \u2264 n \u2264 2\u00b3\u00b9 - 1 *",
+    "examples": "Example 1:\nInput:  n = 19\nOutput: true\nExplanation: 1\u00b2 + 9\u00b2 = 82 \u2192 8\u00b2 + 2\u00b2 = 68 \u2192 6\u00b2 + 8\u00b2 = 100 \u2192 1\u00b2 + 0\u00b2 + 0\u00b2 = 1\nExample 2:\nInput:  n = 2\nOutput: false\nExplanation: 2 \u2192 4 \u2192 16 \u2192 37 \u2192 58 \u2192 89 \u2192 145 \u2192 42 \u2192 20 \u2192 4 (cycle, never reaches 1)",
+    "approach": "Set to detect cycle.",
+    "time": "O(log n)",
+    "space": "O(log n)",
+    "className": "LC202_HappyNumber_Easy_HashMap",
+    "packagePath": "com.leetcode.easy.hashmap",
+    "filePath": "easy/hashmap/LC202_HappyNumber_Easy_HashMap.java"
+  },
+  {
+    "title": "Reverse Linked List",
+    "number": "LC206",
+    "difficulty": "Easy",
+    "type": "Linked List",
+    "tags": [
+      "linkedlist",
+      "faang"
+    ],
+    "statement": "* Given the head of a singly linked list, reverse the list, and return the reversed list . *",
+    "constraints": "* The number of nodes in the list is the range [0, 5000]. -5000 \u2264 Node.val \u2264 5000 *",
+    "examples": "Example 1:\nInput:  head = [1,2,3,4,5]\nOutput: [5,4,3,2,1]\nExample 2:\nInput:  head = [1,2]\nOutput: [2,1]\nExample 3:\nInput:  head = []\nOutput: []",
+    "approach": "Iterative with prev/curr/next pointers.",
+    "time": "O(n)",
+    "space": "O(1)",
+    "className": "LC206_ReverseLinkedList_Easy_LinkedList",
+    "packagePath": "com.leetcode.easy.linkedlist",
+    "filePath": "easy/linkedlist/LC206_ReverseLinkedList_Easy_LinkedList.java"
+  },
+  {
+    "title": "Course Schedule",
+    "number": "LC207",
+    "difficulty": "Medium",
+    "type": "Graph, Topological Sort, DFS",
+    "tags": [
+      "graph",
+      "topologicalsort",
+      "faang"
+    ],
+    "statement": "* There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [a, b] indicates that you must take course b first if you want to take course a. For example, [0, 1] means to take course 0 you have to first take course 1. Return true if you can finish all courses. Otherwise, return false. *",
+    "constraints": "* 1 \u2264 numCourses \u2264 2000 0 \u2264 prerequisites.length \u2264 5000 prerequisites[i].length == 2 0 \u2264 a, b All pairs [a, b] are distinct. *",
+    "examples": "Example 1:\nInput:  numCourses = 2, prerequisites = [[1, 0]]\nOutput: true\nExplanation: Take 0 first, then 1. No cycle.\nExample 2:\nInput:  numCourses = 2, prerequisites = [[1, 0], [0, 1]]\nOutput: false\nExplanation: Cycle: 0 \u2192 1 \u2192 0. Impossible.\nExample 3:\nInput:  numCourses = 1, prerequisites = []\nOutput: true",
+    "approach": "DFS cycle detection with 3-state coloring.",
+    "time": "O(V+E)",
+    "space": "O(V)",
+    "className": "LC207_CourseSchedule_Medium_Graph",
+    "packagePath": "com.leetcode.medium.graph",
+    "filePath": "medium/graph/LC207_CourseSchedule_Medium_Graph.java"
+  },
+  {
+    "title": "Kth Largest Element in an Array",
+    "number": "LC215",
+    "difficulty": "Medium",
+    "type": "Heap, QuickSelect",
+    "tags": [
+      "heap",
+      "faang"
+    ],
+    "statement": "* Given an integer array nums and an integer k, return the k-th largest element in the array. Note that it is the k-th largest element in the sorted order, not the k-th distinct element. Can you solve it without sorting? *",
+    "constraints": "* 1 \u2264 k \u2264 nums.length \u2264 10\u2075 -10\u2074 \u2264 nums[i] \u2264 10\u2074 *",
+    "examples": "Example 1:\nInput:  nums = [3, 2, 1, 5, 6, 4], k = 2\nOutput: 5\nExplanation: Sorted: [6,5,4,3,2,1]. 2nd largest = 5.\nExample 2:\nInput:  nums = [3, 2, 3, 1, 2, 4, 5, 5, 6], k = 4\nOutput: 4\nExplanation: Sorted: [6,5,5,4,3,3,2,2,1]. 4th largest = 4.",
+    "approach": "Min-heap of size k. Poll when size > k.",
+    "time": "O(n log k)",
+    "space": "O(k)",
+    "className": "LC215_KthLargest_Medium_Heap",
+    "packagePath": "com.leetcode.medium.heap",
+    "filePath": "medium/heap/LC215_KthLargest_Medium_Heap.java"
+  },
+  {
+    "title": "Invert Binary Tree",
+    "number": "LC226",
+    "difficulty": "Easy",
+    "type": "Tree, DFS",
+    "tags": [
+      "tree",
+      "faang"
+    ],
+    "statement": "* Given the root of a binary tree, invert the tree, and return its root. To invert a binary tree: swap the left and right child of every node. *",
+    "constraints": "* The number of nodes in the tree is in the range [0, 100]. -100 \u2264 Node.val \u2264 100 *",
+    "examples": "Example 1:\nInput:  root = [4,2,7,1,3,6,9]\n4                   4\n/ \\                 / \\\n2   7      \u2192        7   2\n/ \\ / \\             / \\ / \\\n1  3 6  9          9  6 3  1\nOutput: [4,7,2,9,6,3,1]\nExample 2:\nInput:  root = [2,1,3]\nOutput: [2,3,1]\nExample 3:\nInput:  root = []\nOutput: []",
+    "approach": "Recursive swap.",
+    "time": "O(n)",
+    "space": "O(h)",
+    "className": "LC226_InvertBinaryTree_Easy_Tree",
+    "packagePath": "com.leetcode.easy.tree",
+    "filePath": "easy/tree/LC226_InvertBinaryTree_Easy_Tree.java"
+  },
+  {
+    "title": "Product of Array Except Self",
+    "number": "LC238",
+    "difficulty": "Medium",
+    "type": "Array",
+    "tags": [
+      "array",
+      "faang"
+    ],
+    "statement": "* Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i]. You must write an algorithm that runs in O(n) time and without using the division operation. *",
+    "constraints": "* 2 \u2264 nums.length \u2264 10\u2075 -30 \u2264 nums[i] \u2264 30 The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer. *",
+    "examples": "Example 1:\nInput:  nums = [1, 2, 3, 4]\nOutput: [24, 12, 8, 6]\nExplanation: answer[0] = 2*3*4 = 24, answer[1] = 1*3*4 = 12, etc.\nExample 2:\nInput:  nums = [-1, 1, 0, -3, 3]\nOutput: [0, 0, 9, 0, 0]",
+    "approach": "Two passes - left products, then right products.",
+    "time": "O(n)",
+    "space": "O(1) excluding output",
+    "className": "LC238_ProductExceptSelf_Medium_Array",
+    "packagePath": "com.leetcode.medium.array",
+    "filePath": "medium/array/LC238_ProductExceptSelf_Medium_Array.java"
+  },
+  {
+    "title": "Valid Anagram",
+    "number": "LC242",
+    "difficulty": "Easy",
+    "type": "Hash Map, String",
+    "tags": [
+      "hashmap",
+      "string",
+      "faang"
+    ],
+    "statement": "* Given two strings s and t, return true if t is an anagram of s, and false otherwise. An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once. *",
+    "constraints": "* 1 \u2264 s.length, t.length \u2264 5 \u00d7 10\u2074 s and t consist of lowercase English letters. *",
+    "examples": "Example 1:\nInput:  s = \"anagram\", t = \"nagaram\"\nOutput: true\nExplanation: Both strings contain the same letters: a,a,a,g,m,n,r\nExample 2:\nInput:  s = \"rat\", t = \"car\"\nOutput: false\nExplanation: \"rat\" and \"car\" have different character counts.",
+    "approach": "Count character frequencies in both strings.",
+    "time": "O(n)",
+    "space": "O(1) - fixed 26 chars",
+    "className": "LC242_ValidAnagram_Easy_HashMap",
+    "packagePath": "com.leetcode.easy.hashmap",
+    "filePath": "easy/hashmap/LC242_ValidAnagram_Easy_HashMap.java"
+  },
+  {
+    "title": "Alien Dictionary (Premium)",
+    "number": "LC269",
+    "difficulty": "Hard",
+    "type": "Graph, Topological Sort",
+    "tags": [
+      "graph",
+      "topologicalsort",
+      "faang"
+    ],
+    "statement": "* There is a new alien language that uses the English alphabet. However, the order among the letters is unknown to you. You are given a list of strings words from the alien language's dictionary, where the strings are sorted lexicographically by the rules of this new language. Return a string of the unique letters in the new alien language sorted in lexicographically increasing order by the new language's rules. If there is no solution, return \"\". If there are multiple solutions, return any of them. *",
+    "constraints": "* 1 \u2264 words.length \u2264 100 1 \u2264 words[i].length \u2264 100 words[i] consists of only lowercase English letters. If \"a\" comes before \"b\" in words, then in the alien language \"a\" comes before \"b\". *",
+    "examples": "Example 1:\nInput:  words = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]\nOutput: \"wertf\"\nExplanation: Order derived from adjacent words: wrt before wrf (t before f), er before ett (r before t),\nett before rftt (e before r). Result: w, e, r, t, f.\nExample 2:\nInput:  words = [\"z\",\"x\"]\nOutput: \"zx\"\nExample 3:\nInput:  words = [\"z\",\"x\",\"z\"]\nOutput: \"\"\nExplanation: Invalid - \"z\" before \"z\" implies contradiction.",
+    "approach": "Build graph from adjacent word pairs, topological sort.",
+    "time": "O(C) total chars",
+    "space": "O(1)",
+    "className": "LC269_AlienDictionary_Hard_Graph",
+    "packagePath": "com.leetcode.hard.graph",
+    "filePath": "hard/graph/LC269_AlienDictionary_Hard_Graph.java"
+  },
+  {
+    "title": "Move Zeroes",
+    "number": "LC283",
+    "difficulty": "Easy",
+    "type": "Two Pointers, Array",
+    "tags": [
+      "twopointers",
+      "array",
+      "faang"
+    ],
+    "statement": "* Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements. Note that you must do this in-place without making a copy of the array. *",
+    "constraints": "* 1 \u2264 nums.length \u2264 10\u2074 -2\u00b3\u00b9 \u2264 nums[i] \u2264 2\u00b3\u00b9 - 1 *",
+    "examples": "Example 1:\nInput:  nums = [0, 1, 0, 3, 12]\nOutput: [1, 3, 12, 0, 0]\nExplanation: Non-zeros [1,3,12] keep order; zeros moved to end.\nExample 2:\nInput:  nums = [0]\nOutput: [0]",
+    "approach": "Two pointers - slow for write position, fast for scan.",
+    "time": "O(n)",
+    "space": "O(1)",
+    "className": "LC283_MoveZeroes_Easy_TwoPointers",
+    "packagePath": "com.leetcode.easy.twopointers",
+    "filePath": "easy/twopointers/LC283_MoveZeroes_Easy_TwoPointers.java"
+  },
+  {
+    "title": "Serialize and Deserialize Binary Tree",
+    "number": "LC297",
+    "difficulty": "Hard",
+    "type": "Tree, BFS/DFS",
+    "tags": [
+      "tree",
+      "design",
+      "faang"
+    ],
+    "statement": "* Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment. Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure. *",
+    "constraints": "* The number of nodes in the tree is in the range [0, 10\u2074]. -1000 \u2264 Node.val \u2264 1000 *",
+    "examples": "Example 1:\nInput:  root = [1, 2, 3, null, null, 4, 5]\nOutput: Serialized string (e.g. \"1,2,3,null,null,4,5,\")\nDeserialize back to original tree.\nExample 2:\nInput:  root = []\nOutput: \"\" (empty string for null tree)",
+    "approach": "BFS level-order with \"null\" for missing nodes.",
+    "time": "O(n)",
+    "space": "O(n)",
+    "className": "LC297_SerializeDeserializeBinaryTree_Hard_Tree",
+    "packagePath": "com.leetcode.hard.tree",
+    "filePath": "hard/tree/LC297_SerializeDeserializeBinaryTree_Hard_Tree.java"
+  },
+  {
+    "title": "Longest Increasing Subsequence",
+    "number": "LC300",
+    "difficulty": "Medium",
+    "type": "Dynamic Programming, Binary Search",
+    "tags": [
+      "dp",
+      "binarysearch",
+      "faang"
+    ],
+    "statement": "* Given an integer array nums, return the length of the longest strictly increasing subsequence . A subsequence is derived by deleting some or no elements without changing the order of the remaining elements. *",
+    "constraints": "* 1 \u2264 nums.length \u2264 2500 -10\u2074 \u2264 nums[i] \u2264 10\u2074 *",
+    "examples": "Example 1:\nInput:  nums = [10, 9, 2, 5, 3, 7, 101, 18]\nOutput: 4\nExplanation: The longest increasing subsequence is [2, 3, 7, 101].\nExample 2:\nInput:  nums = [0, 1, 0, 3, 2, 3]\nOutput: 4\nExplanation: [0, 1, 2, 3]\nExample 3:\nInput:  nums = [7, 7, 7, 7, 7, 7, 7]\nOutput: 1",
+    "approach": "DP - dp[i] = LIS ending at i. O(n\u00b2).",
+    "time": "O(n\u00b2)",
+    "space": "O(n)",
+    "className": "LC300_LongestIncreasingSubsequence_Medium_DP",
+    "packagePath": "com.leetcode.medium.dynamicprogramming",
+    "filePath": "medium/dynamicprogramming/LC300_LongestIncreasingSubsequence_Medium_DP.java"
+  },
+  {
+    "title": "Coin Change",
+    "number": "LC322",
+    "difficulty": "Medium",
+    "type": "Dynamic Programming",
+    "tags": [
+      "dp",
+      "faang"
+    ],
+    "statement": "* You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1. You may assume that you have an infinite number of each kind of coin. *",
+    "constraints": "* 1 \u2264 coins.length \u2264 12 1 \u2264 coins[i] \u2264 2\u00b3\u00b9 - 1 0 \u2264 amount \u2264 10\u2074 *",
+    "examples": "Example 1:\nInput:  coins = [1, 2, 5], amount = 11\nOutput: 3\nExplanation: 11 = 5 + 5 + 1\nExample 2:\nInput:  coins = [2], amount = 3\nOutput: -1\nExplanation: Cannot make 3 with only 2's.\nExample 3:\nInput:  coins = [1], amount = 0\nOutput: 0",
+    "approach": "dp[i] = min coins for amount i. dp[i] = 1 + min(dp[i-coin]).",
+    "time": "O(amount * coins)",
+    "space": "O(amount)",
+    "className": "LC322_CoinChange_Medium_DP",
+    "packagePath": "com.leetcode.medium.dynamicprogramming",
+    "filePath": "medium/dynamicprogramming/LC322_CoinChange_Medium_DP.java"
+  },
+  {
+    "title": "Reverse String",
+    "number": "LC344",
+    "difficulty": "Easy",
+    "type": "String, Two Pointers",
+    "tags": [
+      "string",
+      "twopointers",
+      "faang"
+    ],
+    "statement": "* Write a function that reverses a string. The input string is given as an array of characters s. You must do this by modifying the input array in-place with O(1) extra memory. *",
+    "constraints": "* 1 \u2264 s.length \u2264 10\u2075 s[i] is a printable ascii character. *",
+    "examples": "Example 1:\nInput:  s = [\"h\",\"e\",\"l\",\"l\",\"o\"]\nOutput: [\"o\",\"l\",\"l\",\"e\",\"h\"]\nExample 2:\nInput:  s = [\"H\",\"a\",\"n\",\"n\",\"a\",\"h\"]\nOutput: [\"h\",\"a\",\"n\",\"n\",\"a\",\"H\"]",
+    "approach": "Two pointers swap from both ends.",
+    "time": "O(n)",
+    "space": "O(1)",
+    "className": "LC344_ReverseString_Easy_String",
+    "packagePath": "com.leetcode.easy.string",
+    "filePath": "easy/string/LC344_ReverseString_Easy_String.java"
+  },
+  {
+    "title": "Top K Frequent Elements",
+    "number": "LC347",
+    "difficulty": "Medium",
+    "type": "Heap, Hash Map",
+    "tags": [
+      "heap",
+      "hashmap",
+      "faang"
+    ],
+    "statement": "* Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order. It is guaranteed that the answer is unique. *",
+    "constraints": "* 1 \u2264 nums.length \u2264 10\u2075 -10\u2074 \u2264 nums[i] \u2264 10\u2074 k is in the range [1, number of unique elements]. The answer is unique. *",
+    "examples": "Example 1:\nInput:  nums = [1, 1, 1, 2, 2, 3], k = 2\nOutput: [1, 2]\nExplanation: 1 appears 3 times, 2 appears 2 times. Top 2 frequent.\nExample 2:\nInput:  nums = [1], k = 1\nOutput: [1]",
+    "approach": "Count frequencies, min-heap of size k.",
+    "time": "O(n log k)",
+    "space": "O(n)",
+    "className": "LC347_TopKFrequentElements_Medium_Heap",
+    "packagePath": "com.leetcode.medium.heap",
+    "filePath": "medium/heap/LC347_TopKFrequentElements_Medium_Heap.java"
+  },
+  {
+    "title": "Binary Search",
+    "number": "LC704",
+    "difficulty": "Easy",
+    "type": "Binary Search",
+    "tags": [
+      "binarysearch",
+      "faang"
+    ],
+    "statement": "* Given an array of integers nums which is sorted in ascending order , and an integer target, write a function to search target in nums. If target exists, then return its index. Otherwise, return -1. You must write an algorithm with O(log n) runtime complexity. *",
+    "constraints": "* 1 \u2264 nums.length \u2264 10\u2074 -10\u2074 All integers in nums are unique. nums is sorted in ascending order. *",
+    "examples": "Example 1:\nInput:  nums = [-1, 0, 3, 5, 9, 12], target = 9\nOutput: 4\nExplanation: 9 exists in nums and its index is 4.\nExample 2:\nInput:  nums = [-1, 0, 3, 5, 9, 12], target = 2\nOutput: -1\nExplanation: 2 does not exist in nums so return -1.",
+    "approach": "Classic binary search.",
+    "time": "O(log n)",
+    "space": "O(1)",
+    "className": "LC704_BinarySearch_Easy_BinarySearch",
+    "packagePath": "com.leetcode.easy.binarysearch",
+    "filePath": "easy/binarysearch/LC704_BinarySearch_Easy_BinarySearch.java"
+  }
+]

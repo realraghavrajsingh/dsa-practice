@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeetCode DSA Problems | FAANG & Google-Style</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.3s ease-out',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(-8px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    .prose-pre { white-space: pre-wrap; word-break: break-word; }
+    .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .dark .gradient-bg { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen font-sans antialiased transition-colors duration-200">
+  <div id="app" class="min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center text-white font-bold shadow-lg">LC</div>
+            <div>
+              <h1 class="text-lg font-bold">LeetCode DSA</h1>
+              <p class="text-xs text-gray-500 dark:text-gray-400">FAANG & Google-Style</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Toggle theme">
+              <svg class="w-5 h-5 dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+              <svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Search & Filters -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex flex-col sm:flex-row gap-4 mb-6">
+        <div class="flex-1 relative">
+          <input type="text" id="search" placeholder="Search problems... (e.g. Two Sum, array, LC001)" 
+            class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <select id="difficulty-filter" class="px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-indigo-500">
+            <option value="">All Difficulties</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+          <select id="type-filter" class="px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-indigo-500 min-w-[200px]">
+            <option value="">All Types</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div id="stats" class="mb-6 text-sm text-gray-500 dark:text-gray-400">
+        Showing <span id="count">0</span> of <span id="total">0</span> problems
+      </div>
+
+      <!-- Problem Grid -->
+      <div id="problems-grid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Cards rendered by JS -->
+      </div>
+
+      <div id="empty-state" class="hidden text-center py-16 text-gray-500 dark:text-gray-400">
+        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <p class="text-lg">No problems match your filters.</p>
+        <p class="text-sm mt-2">Try adjusting your search or filters.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Problem Detail Modal -->
+  <div id="modal" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal()"></div>
+    <div class="absolute inset-4 sm:inset-8 md:inset-8 lg:inset-8 overflow-auto">
+      <div class="max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden animate-fade-in">
+        <div class="sticky top-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between">
+          <h2 id="modal-title" class="text-xl font-bold"></h2>
+          <button onclick="closeModal()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div id="modal-content" class="p-6 prose dark:prose-invert max-w-none">
+          <!-- Content -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let problems = [];
+    let types = new Set();
+
+    // Theme
+    const themeToggle = document.getElementById('theme-toggle');
+    if (localStorage.theme === 'dark' || (!localStorage.theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    themeToggle?.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    });
+
+    // Load problems
+    fetch('/problems.json')
+      .then(r => r.json())
+      .then(data => {
+        problems = data;
+        problems.forEach(p => {
+          (p.type || '').split(',').forEach(t => t.trim() && types.add(t.trim()));
+        });
+        const typeSelect = document.getElementById('type-filter');
+        [...types].sort().forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t;
+          opt.textContent = t;
+          typeSelect.appendChild(opt);
+        });
+        document.getElementById('total').textContent = problems.length;
+        render();
+      })
+      .catch(err => {
+        document.getElementById('problems-grid').innerHTML = 
+          '<div class="col-span-full text-center py-16 text-red-500">Failed to load problems. Run: python3 scripts/extract_problems.py</div>';
+      });
+
+    function filterProblems() {
+      const search = document.getElementById('search').value.toLowerCase();
+      const difficulty = document.getElementById('difficulty-filter').value;
+      const type = document.getElementById('type-filter').value;
+
+      return problems.filter(p => {
+        const matchSearch = !search || 
+          (p.title || '').toLowerCase().includes(search) ||
+          (p.number || '').toLowerCase().includes(search) ||
+          (p.type || '').toLowerCase().includes(search) ||
+          (p.tags || []).some(t => t.toLowerCase().includes(search));
+        const matchDiff = !difficulty || p.difficulty === difficulty;
+        const matchType = !type || (p.type || '').includes(type);
+        return matchSearch && matchDiff && matchType;
+      });
+    }
+
+    function render() {
+      const filtered = filterProblems();
+      document.getElementById('count').textContent = filtered.length;
+      const grid = document.getElementById('problems-grid');
+      const empty = document.getElementById('empty-state');
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      grid.innerHTML = filtered.map(p => `
+        <div class="card p-5 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-lg transition-all cursor-pointer group" onclick='openModal("${p.number}")'>
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <span class="text-xs font-mono font-medium text-indigo-600 dark:text-indigo-400">${p.number}</span>
+            <span class="badge px-2 py-0.5 rounded-full text-xs font-medium ${getDifficultyClass(p.difficulty)}">${p.difficulty}</span>
+          </div>
+          <h3 class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors mb-2">${escapeHtml(p.title)}</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">${escapeHtml(p.type || '')}</p>
+          ${p.time ? `<p class="text-xs text-gray-400 dark:text-gray-500 mt-2 font-mono">${escapeHtml(p.time)} | ${escapeHtml(p.space)}</p>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function getDifficultyClass(d) {
+      if (d === 'Easy') return 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400';
+      if (d === 'Medium') return 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400';
+      if (d === 'Hard') return 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400';
+      return '';
+    }
+
+    function escapeHtml(s) {
+      if (!s) return '';
+      const div = document.createElement('div');
+      div.textContent = s;
+      return div.innerHTML;
+    }
+
+    function openModal(number) {
+      const p = problems.find(x => x.number === number);
+      if (!p) return;
+      const modal = document.getElementById('modal');
+      const title = document.getElementById('modal-title');
+      const content = document.getElementById('modal-content');
+
+      title.textContent = `${p.number}: ${p.title}`;
+      content.innerHTML = `
+        <div class="space-y-6">
+          <div class="flex flex-wrap gap-2">
+            <span class="badge px-3 py-1 rounded-full text-sm font-medium ${getDifficultyClass(p.difficulty)}">${p.difficulty}</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">${escapeHtml(p.type || '')}</span>
+          </div>
+          ${p.statement ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Problem Statement</h3><p class="text-gray-600 dark:text-gray-300">${escapeHtml(p.statement)}</p></div>` : ''}
+          ${p.constraints ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Constraints</h3><p class="text-gray-600 dark:text-gray-300">${escapeHtml(p.constraints)}</p></div>` : ''}
+          ${p.examples ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Examples</h3><pre class="prose-pre p-4 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm font-mono overflow-x-auto">${escapeHtml(p.examples)}</pre></div>` : ''}
+          ${p.approach ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Approach</h3><p class="text-gray-600 dark:text-gray-300">${escapeHtml(p.approach)}</p></div>` : ''}
+          ${p.time || p.space ? `<div class="flex gap-4 text-sm font-mono"><span>Time: ${escapeHtml(p.time || '-')}</span><span>Space: ${escapeHtml(p.space || '-')}</span></div>` : ''}
+          <div class="pt-4 border-t border-gray-200 dark:border-gray-800">
+            <p class="text-xs text-gray-500 dark:text-gray-400 font-mono">${escapeHtml(p.packagePath)}.${escapeHtml(p.className || '')}</p>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('search').addEventListener('input', render);
+    document.getElementById('search').addEventListener('keyup', e => e.key === 'Escape' && (e.target.value = '') && render());
+    document.getElementById('difficulty-filter').addEventListener('change', render);
+    document.getElementById('type-filter').addEventListener('change', render);
+    document.addEventListener('keydown', e => e.key === 'Escape' && closeModal());
+  </script>
+</body>
+</html>
