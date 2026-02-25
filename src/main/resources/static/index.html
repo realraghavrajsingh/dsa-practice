@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +39,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-  <!-- AdSense loads only after consent (GDPR/EEA) -->
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6129322637422500" crossorigin="anonymous"></script>
   <style>
     .prose-pre { white-space: pre-wrap; word-break: break-word; }
     .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
@@ -54,25 +55,12 @@
     .card { transition: transform 0.2s, box-shadow 0.2s; }
     .card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.25); }
     .dark .card:hover { box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.4); }
-    #consent-banner { transition: transform 0.3s ease, opacity 0.3s ease; }
   </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen font-sans antialiased transition-colors duration-200">
-  <!-- Consent Banner (EEA/UK/CH - GDPR) -->
-  <div id="consent-banner" class="fixed bottom-0 left-0 right-0 z-[200] p-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg hidden">
-    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-      <p class="text-sm text-gray-600 dark:text-gray-300">
-        We use cookies and similar technologies to show ads and improve your experience. By clicking "Accept", you consent to personalized ads. <a href="#" id="consent-manage" class="text-indigo-600 dark:text-indigo-400 underline">Manage options</a>
-      </p>
-      <div class="flex gap-2 flex-shrink-0">
-        <button id="consent-decline" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 text-sm font-medium">Do not consent</button>
-        <button id="consent-accept" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium">Consent</button>
-      </div>
-    </div>
-  </div>
-  <div id="app" class="min-h-screen">
-    <!-- Header -->
-    <header class="sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl">
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 h-screen flex flex-col font-sans antialiased transition-colors duration-200 overflow-hidden">
+  <div id="app" class="flex flex-col h-full min-h-0">
+    <!-- Header (fixed) -->
+    <header class="flex-shrink-0 z-50 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center gap-3">
@@ -102,8 +90,8 @@
       </div>
     </header>
 
-    <!-- Main layout: [Left Ad] [Content] [Right Ad] -->
-    <div class="flex flex-1 w-full">
+    <!-- Scrollable content: [Left Ad] [Content] [Right Ad] - pb adds space so content isn't hidden behind fixed footer -->
+    <div class="flex flex-1 min-h-0 overflow-y-auto pb-40">
       <!-- Left Ad Sidebar (desktop only) -->
       <aside class="hidden xl:block w-[160px] xl:w-[200px] flex-shrink-0 pt-6">
         <div class="sticky top-24 flex justify-center">
@@ -164,22 +152,6 @@
         <p class="text-lg">No problems match your filters.</p>
         <p class="text-sm mt-2">Try adjusting your search or filters.</p>
       </div>
-
-      <!-- Support Footer -->
-      <footer class="mt-16 pt-8 pb-12 border-t border-gray-200 dark:border-gray-800 text-center">
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Enjoying this? Help keep it free.</p>
-        <p class="text-xs text-gray-400 dark:text-gray-500 mb-4">One-time tip (Buy Me a Coffee) or monthly support (GitHub Sponsors) — both help add more problems and maintain the site.</p>
-        <div class="flex flex-wrap justify-center gap-3">
-          <a href="https://buymeacoffee.com/realraghavrajsingh" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-medium transition-colors">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.216 5.676A2.176 2.176 0 0 0 18.04 3.5h-.081a2.18 2.18 0 0 0-2.177 2.177 2.18 2.18 0 0 0 2.177 2.177h.081a2.18 2.18 0 0 0 2.177-2.177 2.176 2.176 0 0 0-.001-4.352zM4.5 3.5h.081a2.18 2.18 0 0 1 2.177 2.177 2.18 2.18 0 0 1-2.177 2.177H4.5a2.18 2.18 0 0 1-2.177-2.177A2.176 2.176 0 0 1 4.5 3.5zm15.5 0h.081a2.18 2.18 0 0 1 2.177 2.177 2.18 2.18 0 0 1-2.177 2.177H20a2.18 2.18 0 0 1-2.177-2.177A2.176 2.176 0 0 1 20 3.5zM2 9.5h20v11a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 20.5V9.5z"/></svg>
-            Buy Me a Coffee
-          </a>
-          <a href="https://github.com/sponsors/realraghavrajsingh" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 text-white font-medium transition-colors">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            GitHub Sponsors
-          </a>
-        </div>
-      </footer>
     </div>
       </main>
 
@@ -193,6 +165,22 @@
         </div>
       </aside>
     </div>
+
+    <!-- Footer (fixed at bottom of viewport) -->
+    <footer class="fixed bottom-0 left-0 right-0 z-40 pt-6 pb-8 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 text-center">
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Enjoying this? Help keep it free.</p>
+      <p class="text-xs text-gray-400 dark:text-gray-500 mb-4">One-time tip (Buy Me a Coffee) or monthly support (GitHub Sponsors) — both help add more problems and maintain the site.</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="https://buymeacoffee.com/realraghavrajsingh" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-medium transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.216 5.676A2.176 2.176 0 0 0 18.04 3.5h-.081a2.18 2.18 0 0 0-2.177 2.177 2.18 2.18 0 0 0 2.177 2.177h.081a2.18 2.18 0 0 0 2.177-2.177 2.176 2.176 0 0 0-.001-4.352zM4.5 3.5h.081a2.18 2.18 0 0 1 2.177 2.177 2.18 2.18 0 0 1-2.177 2.177H4.5a2.18 2.18 0 0 1-2.177-2.177A2.176 2.176 0 0 1 4.5 3.5zm15.5 0h.081a2.18 2.18 0 0 1 2.177 2.177 2.18 2.18 0 0 1-2.177 2.177H20a2.18 2.18 0 0 1-2.177-2.177A2.176 2.176 0 0 1 20 3.5zM2 9.5h20v11a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 20.5V9.5z"/></svg>
+          Buy Me a Coffee
+        </a>
+        <a href="https://github.com/sponsors/realraghavrajsingh" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 text-white font-medium transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub Sponsors
+        </a>
+      </div>
+    </footer>
   </div>
 
   <!-- Problem Detail Modal -->
@@ -216,36 +204,6 @@
   <script>
     let problems = [];
     let types = new Set();
-
-    // Consent & AdSense (GDPR/EEA)
-    const CONSENT_KEY = 'algos_consent';
-    function loadAdSense() {
-      const s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6129322637422500';
-      s.crossOrigin = 'anonymous';
-      document.head.appendChild(s);
-    }
-    function setConsent(value) {
-      localStorage.setItem(CONSENT_KEY, value);
-      const banner = document.getElementById('consent-banner');
-      if (banner) banner.classList.add('hidden');
-      if (value === 'accept') loadAdSense();
-    }
-    (function initConsent() {
-      const consent = localStorage.getItem(CONSENT_KEY);
-      const banner = document.getElementById('consent-banner');
-      if (consent === 'accept') loadAdSense();
-      else if (consent === 'decline') { /* no ads */ }
-      else if (banner) banner.classList.remove('hidden');
-      document.getElementById('consent-accept')?.addEventListener('click', () => setConsent('accept'));
-      document.getElementById('consent-decline')?.addEventListener('click', () => setConsent('decline'));
-      document.getElementById('consent-manage')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        localStorage.removeItem(CONSENT_KEY);
-        if (banner) banner.classList.remove('hidden');
-      });
-    })();
 
     // Theme
     const themeToggle = document.getElementById('theme-toggle');
