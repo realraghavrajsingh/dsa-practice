@@ -39,6 +39,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6129322637422500" crossorigin="anonymous"></script>
   <style>
     .prose-pre { white-space: pre-wrap; word-break: break-word; }
     .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
@@ -74,7 +76,7 @@
               <span class="hidden sm:inline">Buy me a coffee</span>
               <span class="sm:hidden">Coffee</span>
             </a>
-            <a href="https://github.com/sponsors/realraghavrajsingh" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium transition-colors" title="Support monthly via GitHub Sponsors — help keep this free & ad-free">
+            <a href="https://github.com/sponsors/realraghavrajsingh" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium transition-colors" title="Support monthly via GitHub Sponsors — help keep this free">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
               <span class="hidden sm:inline">Sponsor on GitHub</span>
               <span class="sm:hidden">Sponsor</span>
@@ -88,7 +90,20 @@
       </div>
     </header>
 
-    <!-- Search & Filters -->
+    <!-- Main layout: [Left Ad] [Content] [Right Ad] -->
+    <div class="flex flex-1 w-full">
+      <!-- Left Ad Sidebar (desktop only) -->
+      <aside class="hidden xl:block w-[160px] xl:w-[200px] flex-shrink-0 pt-6">
+        <div class="sticky top-24 flex justify-center">
+          <div class="ad-slot min-h-[600px] w-[160px] xl:w-[200px] flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800/50 border border-dashed border-gray-300 dark:border-gray-600">
+            <!-- Google AdSense: Replace data-ad-client and data-ad-slot with your IDs from adsense.google.com -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6129322637422500" data-ad-slot="0000000000" data-ad-format="vertical" data-full-width-responsive="false"></ins>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div class="flex flex-col sm:flex-row gap-4 mb-6">
         <div class="flex-1 relative">
@@ -125,6 +140,13 @@
         <!-- Cards rendered by JS -->
       </div>
 
+      <!-- Mobile Ad Banner (shows on smaller screens where sidebars are hidden) -->
+      <div class="xl:hidden my-6 flex justify-center">
+        <div class="ad-slot min-h-[100px] w-full max-w-[728px] flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800/50 border border-dashed border-gray-300 dark:border-gray-600">
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6129322637422500" data-ad-slot="0000000002" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+        </div>
+      </div>
+
       <div id="empty-state" class="hidden text-center py-16 text-gray-500 dark:text-gray-400">
         <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         <p class="text-lg">No problems match your filters.</p>
@@ -133,7 +155,7 @@
 
       <!-- Support Footer -->
       <footer class="mt-16 pt-8 pb-12 border-t border-gray-200 dark:border-gray-800 text-center">
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Enjoying this? Help keep it free and ad-free.</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Enjoying this? Help keep it free.</p>
         <p class="text-xs text-gray-400 dark:text-gray-500 mb-4">One-time tip (Buy Me a Coffee) or monthly support (GitHub Sponsors) — both help add more problems and maintain the site.</p>
         <div class="flex flex-wrap justify-center gap-3">
           <a href="https://buymeacoffee.com/realraghavrajsingh" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-medium transition-colors">
@@ -146,6 +168,18 @@
           </a>
         </div>
       </footer>
+    </div>
+      </main>
+
+      <!-- Right Ad Sidebar (desktop only) -->
+      <aside class="hidden xl:block w-[160px] xl:w-[200px] flex-shrink-0 pt-6">
+        <div class="sticky top-24 flex justify-center">
+          <div class="ad-slot min-h-[600px] w-[160px] xl:w-[200px] flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800/50 border border-dashed border-gray-300 dark:border-gray-600">
+            <!-- Google AdSense: Replace data-ad-client and data-ad-slot with your IDs (use a different slot for right) -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6129322637422500" data-ad-slot="0000000001" data-ad-format="vertical" data-full-width-responsive="false"></ins>
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
 

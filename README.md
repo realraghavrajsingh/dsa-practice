@@ -33,6 +33,17 @@ Requires [ngrok](https://ngrok.com) (`brew install ngrok`). Alternative: `npx lo
 python3 scripts/extract_problems.py
 ```
 
+### AdSense (Optional)
+
+Ad slots are in the left/right sidebars (desktop) and a horizontal banner (mobile). To enable:
+
+1. Sign up at [adsense.google.com](https://adsense.google.com) and get approved
+2. Create 3 ad units (display ads): left sidebar, right sidebar, mobile banner
+3. In `index.html`, replace `ca-pub-XXXXXXXXXXXXXXXX` with your publisher ID (in the script tag and each `ins` element)
+4. Replace `data-ad-slot="0000000000"` (and 0000000001, 0000000002) with your actual slot IDs
+
+Until configured, placeholder areas show with dashed borders.
+
 ## Quick Start (Run a Solution)
 
 ```bash
