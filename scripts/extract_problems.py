@@ -96,6 +96,15 @@ def extract_javadoc(content: str) -> dict | None:
     return result if result["title"] else None
 
 
+def _title_to_slug(title: str) -> str:
+    """Convert problem title to LeetCode URL slug (e.g. 'Two Sum' -> 'two-sum')."""
+    if not title:
+        return ""
+    slug = title.lower().replace(" ", "-")
+    slug = re.sub(r"[^a-z0-9-]", "", slug)
+    return slug.replace("--", "-").strip("-")
+
+
 def extract_java_code(content: str) -> str:
     """Extract Java class code (from package to end), excluding Javadoc."""
     # Remove Javadoc blocks
@@ -124,6 +133,7 @@ def main():
             meta["packagePath"] = f"com.leetcode.{package_path}" if package_path else "com.leetcode"
             meta["filePath"] = str(rel_path)
             meta["javaCode"] = extract_java_code(content)
+            meta["leetcodeSlug"] = _title_to_slug(meta.get("title", ""))
             problems.append(meta)
             seen.add(meta["number"])
 

@@ -56,6 +56,7 @@ LC{LeetCodeNumber}_{ShortTitle}_{Level}_{ProblemType}
 | Heap | `heap` | Top K Elements, Merge K Lists |
 | Hash Map | `hashmap` | Group Anagrams, Two Sum |
 | Bit Manipulation | `bitmanipulation` | Single Number, Hamming Distance |
+| Design | `design` | LRU Cache, Min Stack |
 | Union Find | `unionfind` | Number of Islands, Redundant Connection |
 
 ---
@@ -80,9 +81,9 @@ com.leetcode/
 │   ├── graph/
 │   └── bitmanipulation/
 ├── medium/
-│   └── (same types)
+│   └── (same types + design/)
 ├── hard/
-│   └── (same types)
+│   └── (same types + binarysearch/, linkedlist/, slidingwindow/, heap/, stack/)
 └── util/
 ```
 

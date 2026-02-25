@@ -1,0 +1,18 @@
+{
+  "name": "LeetCode DSA Problems",
+  "short_name": "LeetCode DSA",
+  "description": "FAANG & Google-style LeetCode problems with Java solutions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

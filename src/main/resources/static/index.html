@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6366f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="LeetCode DSA">
   <title>LeetCode DSA Problems | FAANG & Google-Style</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="/icon.svg">
+  <link rel="apple-touch-icon" href="/icon.svg">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -88,12 +96,18 @@
           <select id="type-filter" class="px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-indigo-500 min-w-[200px]">
             <option value="">All Types</option>
           </select>
+          <select id="sort-by" class="px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-indigo-500">
+            <option value="number">Sort: Number</option>
+            <option value="difficulty">Sort: Difficulty</option>
+            <option value="type">Sort: Type</option>
+          </select>
         </div>
       </div>
 
       <!-- Stats -->
-      <div id="stats" class="mb-6 text-sm text-gray-500 dark:text-gray-400">
-        Showing <span id="count">0</span> of <span id="total">0</span> problems
+      <div id="stats" class="mb-6 flex flex-wrap gap-4 text-sm text-gray-500 dark:text-gray-400">
+        <span>Showing <span id="count">0</span> of <span id="total">0</span> problems</span>
+        <span id="progress-stats" class="text-green-600 dark:text-green-400 font-medium"></span>
       </div>
 
       <!-- Problem Grid -->
@@ -159,6 +173,7 @@
           typeSelect.appendChild(opt);
         });
         document.getElementById('total').textContent = problems.length;
+        updateProgressStats();
         render();
       })
       .catch(err => {
@@ -166,6 +181,42 @@
           '<div class="col-span-full text-center py-16 text-red-500">Failed to load problems. Run: python3 scripts/extract_problems.py</div>';
       });
 
+    function getSolved() {
+      try {
+        return new Set(JSON.parse(localStorage.getItem('solved') || '[]'));
+      } catch { return new Set(); }
+    }
+    function setSolved(numbers) {
+      localStorage.setItem('solved', JSON.stringify([...numbers]));
+    }
+    function toggleSolved(number) {
+      const s = getSolved();
+      if (s.has(number)) s.delete(number);
+      else s.add(number);
+      setSolved(s);
+      updateProgressStats();
+      render();
+      if (document.getElementById('modal') && !document.getElementById('modal').classList.contains('hidden')) {
+        openModal(number);
+      }
+    }
+    function updateProgressStats() {
+      const s = getSolved();
+      const el = document.getElementById('progress-stats');
+      if (s.size > 0) el.textContent = `✓ ${s.size} solved`;
+      else el.textContent = '';
+    }
+    function sortProblems(list) {
+      const order = document.getElementById('sort-by').value;
+      const arr = [...list];
+      if (order === 'number') arr.sort((a, b) => (a.number || '').localeCompare(b.number || ''));
+      else if (order === 'difficulty') {
+        const ord = { Easy: 0, Medium: 1, Hard: 2 };
+        arr.sort((a, b) => (ord[a.difficulty] ?? 3) - (ord[b.difficulty] ?? 3) || (a.number || '').localeCompare(b.number || ''));
+      }
+      else if (order === 'type') arr.sort((a, b) => (a.type || '').localeCompare(b.type || '') || (a.number || '').localeCompare(b.number || ''));
+      return arr;
+    }
     function filterProblems() {
       const search = document.getElementById('search').value.toLowerCase();
       const difficulty = document.getElementById('difficulty-filter').value;
@@ -196,8 +247,11 @@
       }
       empty.classList.add('hidden');
 
-      grid.innerHTML = filtered.map(p => `
-        <div class="card p-5 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all cursor-pointer group shadow-sm" onclick='openModal("${p.number}")'>
+      const solved = getSolved();
+      const sorted = sortProblems(filtered);
+      grid.innerHTML = sorted.map(p => `
+        <div class="card p-5 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all cursor-pointer group shadow-sm relative" onclick='openModal("${p.number}")'>
+          ${solved.has(p.number) ? '<span class="absolute top-3 right-3 text-green-500" title="Solved">✓</span>' : ''}
           <div class="flex items-start justify-between gap-2 mb-2">
             <span class="text-xs font-mono font-medium text-indigo-600 dark:text-indigo-400">${p.number}</span>
             <span class="badge px-2 py-0.5 rounded-full text-xs font-medium ${getDifficultyClass(p.difficulty)}">${p.difficulty}</span>
@@ -235,37 +289,44 @@
 
       title.textContent = `${p.number}: ${p.title}`;
       const codeId = 'modal-code-' + Date.now();
+      const solved = getSolved();
+      const leetcodeUrl = p.leetcodeSlug ? `https://leetcode.com/problems/${p.leetcodeSlug}/` : null;
       content.innerHTML = `
         <div class="space-y-6">
           <div class="flex flex-wrap gap-2 items-center">
             <span class="badge px-3 py-1 rounded-full text-sm font-medium ${getDifficultyClass(p.difficulty)}">${p.difficulty}</span>
             <span class="text-sm text-gray-500 dark:text-gray-400">${escapeHtml(p.type || '')}</span>
             ${p.time || p.space ? `<span class="text-xs font-mono text-gray-400">${escapeHtml(p.time || '')} | ${escapeHtml(p.space || '')}</span>` : ''}
+            ${leetcodeUrl ? `<a href="${leetcodeUrl}" target="_blank" rel="noopener" class="ml-auto text-sm text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">Open on LeetCode ↗</a>` : ''}
+            <button onclick="toggleSolved('${p.number}'); event.stopPropagation();" class="px-3 py-1 rounded-lg text-sm font-medium ${solved.has(p.number) ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'} hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors">
+              ${solved.has(p.number) ? '✓ Solved' : 'Mark Solved'}
+            </button>
           </div>
           ${p.statement ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Problem Statement</h3><p class="text-gray-600 dark:text-gray-300 leading-relaxed">${escapeHtml(p.statement)}</p></div>` : ''}
           ${p.constraints ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Constraints</h3><p class="text-gray-600 dark:text-gray-300">${escapeHtml(p.constraints)}</p></div>` : ''}
           ${p.examples ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Examples</h3><pre class="prose-pre p-4 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm font-mono overflow-x-auto border border-gray-200 dark:border-gray-700">${escapeHtml(p.examples)}</pre></div>` : ''}
           ${p.approach ? `<div><h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Approach</h3><p class="text-gray-600 dark:text-gray-300">${escapeHtml(p.approach)}</p></div>` : ''}
-          ${p.javaCode ? `
+          ${p.javaCode ? (() => {
+            const code = (p.javaCode || '').replace(/^package\s+[\w.]+;\s*\n?/, '');
+            return `
           <div>
             <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Java Solution</h3>
             <div class="code-block-wrapper rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
               <div class="code-block-header">
-                <span>${escapeHtml(p.className || '')}.java</span>
+                <span>Solution.java</span>
                 <button class="copy-btn" onclick="copyCode('${codeId}', this)">Copy</button>
               </div>
-              <pre class="language-java"><code id="${codeId}">${escapeHtml(p.javaCode)}</code></pre>
+              <pre class="language-java"><code id="${codeId}">${escapeHtml(code)}</code></pre>
             </div>
           </div>
-          ` : ''}
-          <div class="pt-4 border-t border-gray-200 dark:border-gray-800">
-            <p class="text-xs text-gray-500 dark:text-gray-400 font-mono">${escapeHtml(p.packagePath)}.${escapeHtml(p.className || '')}</p>
-          </div>
+          `;
+          })() : ''}
         </div>
       `;
       modal.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
       if (window.Prism && p.javaCode) Prism.highlightAllUnder(content);
+      updateProgressStats();
     }
 
     function closeModal() {
@@ -287,6 +348,7 @@
     document.getElementById('search').addEventListener('keyup', e => e.key === 'Escape' && (e.target.value = '') && render());
     document.getElementById('difficulty-filter').addEventListener('change', render);
     document.getElementById('type-filter').addEventListener('change', render);
+    document.getElementById('sort-by').addEventListener('change', render);
     document.addEventListener('keydown', e => e.key === 'Escape' && closeModal());
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
